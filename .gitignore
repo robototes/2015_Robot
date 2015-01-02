@@ -1,9 +1,11 @@
+#+++++++++++++++++++++++
 #ide files
 #(custom)
 bin/
 
 
 #end netbeans fies
+#++++++++++++++++++++++++
 
 *.class
 
