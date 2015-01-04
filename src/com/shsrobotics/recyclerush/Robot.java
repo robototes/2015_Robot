@@ -12,6 +12,8 @@ package com.shsrobotics.recyclerush;
 
 import com.shsrobotics.library.FRCRobot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Robot extends FRCRobot implements Hardware {
 	@Override
 	public void robotInit() {
@@ -20,7 +22,14 @@ public class Robot extends FRCRobot implements Hardware {
 	
 	@Override
 	public void autonomousInit() {
-		
+		switch ((int) SmartDashboard.getNumber(Dashboard.AUTO_MODE, Enums.ROBOT_SET)) {
+			case Enums.CONTAINER_STACK_SET:
+				break;
+			case Enums.ROBOT_SET:
+				break;
+			default:
+				break;
+		}
 	}
 
 	@Override
@@ -34,6 +43,9 @@ public class Robot extends FRCRobot implements Hardware {
 	
 	@Override
 	public void teleopPeriodic() {
-
+		/*
+		 * DRIVE CODE
+		 */
+		DriveBase.drive();
 	}
 }
