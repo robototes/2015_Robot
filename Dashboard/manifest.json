@@ -1,0 +1,11 @@
+{
+  "name": "2015 Dashboard",
+  "description": "Team 2412 robot dashboard for 2015 FRC game Recycle Rush.",
+  "version": "0.1",
+  "manifest_version": 2,
+  "app": {
+    "background": {
+      "scripts": ["js/background.js"]
+    }
+  }
+}
