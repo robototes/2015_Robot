@@ -1,7 +1,9 @@
 package com.shsrobotics.recyclerush;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 
@@ -22,6 +24,9 @@ public interface Hardware extends Maps {
 		public static final Encoder rearLeft = new Encoder(DIGITAL_IO_5, DIGITAL_IO_6);
 		public static final Encoder rearRight = new Encoder(DIGITAL_IO_7, DIGITAL_IO_8);
 	}
+	
+	public static final BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
+	public static final Gyro gyroscope = new Gyro(ANALOG_0);
 	
 	public static final RobotDrive robotDrive = new RobotDrive(Wheels.frontLeft, Wheels.rearLeft, Wheels.frontRight, Wheels.rearRight);
 }

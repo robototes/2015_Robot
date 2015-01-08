@@ -1,4 +1,8 @@
-package com.shsrobotics.recyclerush;
+package com.shsrobotics.recyclerush.systems;
+
+import com.shsrobotics.recyclerush.Hardware;
+import com.shsrobotics.recyclerush.Hardware.Wheels;
+import com.shsrobotics.recyclerush.Maps.Dashboard;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

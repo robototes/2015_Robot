@@ -11,7 +11,10 @@
 package com.shsrobotics.recyclerush;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.shsrobotics.library.FRCRobot;
+import com.shsrobotics.recyclerush.systems.DriveBase;
+import com.shsrobotics.recyclerush.systems.RobotDashboard;
 
 public class Robot extends FRCRobot implements Hardware {
 	@Override
