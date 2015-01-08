@@ -1,6 +1,7 @@
 package com.shsrobotics.recyclerush.systems;
 
 import com.shsrobotics.recyclerush.Hardware;
+import com.shsrobotics.recyclerush.util.Vector;
 
 public class DriveBase implements Hardware {
 	public static void drive() {
@@ -13,5 +14,18 @@ public class DriveBase implements Hardware {
 		z = z*z*z;
 		// apply drive
 		robotDrive.mecanumDrive_Cartesian(x, y, z, noGyroscope);
+	}
+	
+	public static double[][] getOutput() {
+		double x = driverJoystick.outputX();
+		double y = driverJoystick.outputY();
+		double z = driverJoystick.outputZ();
+		x = x*x*x;
+		y = y*y*y;
+		z = z*z*z;
+		
+		double[][] r = {{x}, {y}, {z}};
+		
+		return r;
 	}
 }

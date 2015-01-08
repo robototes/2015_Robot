@@ -1,30 +1,33 @@
 package com.shsrobotics.recyclerush.odometry;
 
 import com.shsrobotics.recyclerush.Hardware;
-import com.shsrobotics.recyclerush.util.Vector;
 import edu.wpi.first.wpilibj.Timer;
 
 public class AccGyrOdometer implements Hardware {
 	//velocity
-	private Vector v = new Vector(0, 0, 0);
+	private double[][] v = {{0}, {0}, {0}};
 	Timer timer = new Timer();
+	
+	public AccGyrOdometer() {
+		reset();
+	}
 	
 	public void reset() {
 		gyroscope.initGyro();
 		
-		v = new Vector(0, 0, 0);
+		v[0][0] = 0; v[1][0] = 0; v[2][0] = 0;
 		
 		timer.reset();
 		timer.start();
 	}
 	
-	public Vector get() {
+	public double[][] get() {
 		timer.stop();
 		double t = timer.get();
 		
-		v.x += accelerometer.getX() * t;
-		v.x += accelerometer.getY() * t;
-		v.h = gyroscope.getRate();
+		v[0][0] += accelerometer.getX() * t;
+		v[1][0] += accelerometer.getY() * t;
+		v[2][0] = gyroscope.getRate();
 		
 		timer.reset();
 		timer.start();
