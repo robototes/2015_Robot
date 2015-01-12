@@ -11,8 +11,11 @@ public interface Maps extends GLOBAL {
 		public static final double WHEELS_DISTANCE_PER_PULSE = 0.01;
 		public static final double ODOMETRY_ALPHA = 41.71; // virtual movement angle for carpet
 		public static final double ODOMETRY_BETA = 0.25; // arbitrary scaling factor for rotation
-		public static final double PROCESS_COVARIANCE = 0;
-		public static final double OBSERVATION_COVARIANCE = 0;
+		public static final double PROCESS_COVARIANCE = 0.1;
+		public static final double OBSERVATION_COVARIANCE = 0.1;
+		public static final double MAX_ROT_SPEED = 270;
+		public static final double MAX_FOR_SPEED = 8;
+		public static final double MAX_STRAFE_SPEED = 5;
 	}
 	
 	public static final class Dashboard {

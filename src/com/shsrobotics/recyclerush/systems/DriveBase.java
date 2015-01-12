@@ -1,7 +1,6 @@
 package com.shsrobotics.recyclerush.systems;
 
 import com.shsrobotics.recyclerush.Hardware;
-import com.shsrobotics.recyclerush.util.Vector;
 
 public class DriveBase implements Hardware {
 	public static void drive() {
