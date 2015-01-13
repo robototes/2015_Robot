@@ -20,6 +20,7 @@ public interface Maps extends GLOBAL {
 	
 	public static final class Dashboard {
 		public static final String
+			TABLE_NAME = "DASHBOARD",
 			AUTO_MODE = "auto-mode",
 			FL_TALON_TEMP = "fl-talon-temp",
 			RL_TALON_TEMP = "rl-talon-temp",
@@ -36,7 +37,8 @@ public interface Maps extends GLOBAL {
 	public static final class Enums {
 		public static final int
 			ROBOT_SET = 0,
-			CONTAINER_STACK_SET = 1;
+			STACK_SET = 1,
+			CENTER_CONTAINERS = 2;
 	}
 	
 	public static final class Buttons {

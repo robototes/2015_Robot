@@ -1,25 +1,21 @@
 package com.shsrobotics.recyclerush.systems;
 
 import com.shsrobotics.recyclerush.Hardware;
-import com.shsrobotics.recyclerush.Hardware.Wheels;
-import com.shsrobotics.recyclerush.Maps.Dashboard;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotDashboard implements Hardware {
 	
 	public static void updateView() {
 		// DRIVE SYSTEM temp and current
-		SmartDashboard.putNumber(Dashboard.FL_TALON_TEMP, Wheels.frontLeft.getTemp());
-		SmartDashboard.putNumber(Dashboard.FL_TALON_CURR, Wheels.frontLeft.getOutputCurrent());
-		SmartDashboard.putNumber(Dashboard.RL_TALON_TEMP, Wheels.rearLeft.getTemp());
-		SmartDashboard.putNumber(Dashboard.RL_TALON_CURR, Wheels.rearLeft.getOutputCurrent());
-		SmartDashboard.putNumber(Dashboard.FR_TALON_TEMP, Wheels.frontRight.getTemp());
-		SmartDashboard.putNumber(Dashboard.FR_TALON_CURR, Wheels.frontRight.getOutputCurrent());
-		SmartDashboard.putNumber(Dashboard.RR_TALON_TEMP, Wheels.rearRight.getTemp());
-		SmartDashboard.putNumber(Dashboard.RR_TALON_CURR, Wheels.rearRight.getOutputCurrent());
+		dashboard.putNumber(Dashboard.FL_TALON_TEMP, Wheels.frontLeft.getTemp());
+		dashboard.putNumber(Dashboard.FL_TALON_CURR, Wheels.frontLeft.getOutputCurrent());
+		dashboard.putNumber(Dashboard.RL_TALON_TEMP, Wheels.rearLeft.getTemp());
+		dashboard.putNumber(Dashboard.RL_TALON_CURR, Wheels.rearLeft.getOutputCurrent());
+		dashboard.putNumber(Dashboard.FR_TALON_TEMP, Wheels.frontRight.getTemp());
+		dashboard.putNumber(Dashboard.FR_TALON_CURR, Wheels.frontRight.getOutputCurrent());
+		dashboard.putNumber(Dashboard.RR_TALON_TEMP, Wheels.rearRight.getTemp());
+		dashboard.putNumber(Dashboard.RR_TALON_CURR, Wheels.rearRight.getOutputCurrent());
 		// PDP info
-		SmartDashboard.putNumber(Dashboard.PDP_TEMP, PDP.getTemperature());
-		SmartDashboard.putNumber(Dashboard.PDP_VOLT, PDP.getVoltage());
+		dashboard.putNumber(Dashboard.PDP_TEMP, PDP.getTemperature());
+		dashboard.putNumber(Dashboard.PDP_VOLT, PDP.getVoltage());
 	}
 }

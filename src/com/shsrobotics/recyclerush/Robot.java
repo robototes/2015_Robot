@@ -25,9 +25,11 @@ public class Robot extends FRCRobot implements Hardware {
 	@Override
 	public void autonomousInit() {
 		switch ((int) SmartDashboard.getNumber(Dashboard.AUTO_MODE, Enums.ROBOT_SET)) {
-			case Enums.CONTAINER_STACK_SET:
+			case Enums.STACK_SET:
 				break;
 			case Enums.ROBOT_SET:
+				break;
+			case Enums.CENTER_CONTAINERS:
 				break;
 			default:
 				break;

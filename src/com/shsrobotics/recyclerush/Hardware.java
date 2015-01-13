@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public interface Hardware extends Maps {
 	
@@ -27,6 +28,8 @@ public interface Hardware extends Maps {
 	
 	public static final BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
 	public static final Gyro gyroscope = new Gyro(ANALOG_0);
+	
+	public static final NetworkTable dashboard = NetworkTable.getTable(Dashboard.TABLE_NAME);
 	
 	public static final RobotDrive robotDrive = new RobotDrive(Wheels.frontLeft, Wheels.rearLeft, Wheels.frontRight, Wheels.rearRight);
 }
