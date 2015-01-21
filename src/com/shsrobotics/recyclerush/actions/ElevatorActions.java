@@ -30,7 +30,4 @@ public class ElevatorActions implements Hardware {
 		return DriverStation.getInstance().isAutonomous() || Buttons.elevatorPermButton.held();
 	});
 	
-	public static void test(Object... args) {
-		args[0].getClass().getCanonicalName();
-	}
 }
