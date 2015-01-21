@@ -1,30 +1,36 @@
 package com.shsrobotics.recyclerush.actions;
 
 import com.shsrobotics.library.PermissionAction;
+import com.shsrobotics.recyclerush.Hardware;
 
-public class ElevatorActions {
-	PermissionAction moveUp = new PermissionAction((args)->{
-		
+import edu.wpi.first.wpilibj.DriverStation;
+
+public class ElevatorActions implements Hardware {
+	public static PermissionAction autoMoveUp = new PermissionAction((args)->{
+		if ( args.length == 0 ) {
+			// Sybsystems.elevator.moveUpOne();
+		}
+		else if ( args[0] instanceof Double ) {
+			//Subustems.elevator.moveUp((Double)args[0]);
+		}
+		else {
+			String j;
+			j = args[0].getClass().getCanonicalName();
+			if ( j == null ) j = "$anonymous";
+			System.err.println("Unknown parameter type: ElevatorActions.autoMoveUp("+j+")");
+		}
 	}, (args)->{
-		return true;	// TODO elevator UP predicate
+		return DriverStation.getInstance().isAutonomous() || Buttons.elevatorPermButton.held();	// TODO elevator UP predicate
 	});
 	
-	PermissionAction moveUpMany = new PermissionAction((args)->{
-		
-	}, (args)->{
-		return true;	// TODO elevator UP many predicate
-	});
 	
-	PermissionAction moveDown = new PermissionAction((args)->{
+	public static PermissionAction autoMoveDown = new PermissionAction((args)->{
 		
 	},(args)->{
-		return true;	// TODO elevator DOWN predicate
+		return DriverStation.getInstance().isAutonomous() || Buttons.elevatorPermButton.held();
 	});
 	
-	PermissionAction moveDownMany = new PermissionAction((args)->{
-		
-	},(args)->{
-		return true;	// TODO elevator DOWN many predicate
-	});
-	
+	public static void test(Object... args) {
+		args[0].getClass().getCanonicalName();
+	}
 }
