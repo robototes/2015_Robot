@@ -13,7 +13,7 @@ public class SyncTest {
 	
 	public static void test() {
 		int a = 0, b = 0, c = 0;
-
+		System.out.println(a+b);
 		System.out.println(c);
 	}
 	
