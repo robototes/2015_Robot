@@ -14,6 +14,7 @@ public class ToteSet extends TaskList {
 		this.runSequential();
 		try {
 			begin(new DriveTask());
+			
 		}
 		catch (InterruptedException ie) {
 			
