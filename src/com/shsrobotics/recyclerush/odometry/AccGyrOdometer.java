@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class AccGyrOdometer implements Hardware {
 	//velocity
-	private double[][] v = {{0}, {0}, {0}};
+	private double[] v = {0, 0, 0};
 	Timer timer = new Timer();
 	
 	public AccGyrOdometer() {
@@ -15,19 +15,19 @@ public class AccGyrOdometer implements Hardware {
 	public void reset() {
 		gyroscope.initGyro();
 		
-		v[0][0] = 0; v[1][0] = 0; v[2][0] = 0;
+		v[0] = 0; v[1] = 0; v[2] = 0;
 		
 		timer.reset();
 		timer.start();
 	}
 	
-	public double[][] get() {
+	public double[] get() {
 		timer.stop();
 		double t = timer.get();
 		
-		v[0][0] += accelerometer.getX() * t;
-		v[1][0] += accelerometer.getY() * t;
-		v[2][0] = gyroscope.getRate();
+		v[0] += accelerometer.getX() * t;
+		v[1] += accelerometer.getY() * t;
+		v[2] = gyroscope.getRate();
 		
 		timer.reset();
 		timer.start();

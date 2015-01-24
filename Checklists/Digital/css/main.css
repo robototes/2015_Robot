@@ -1,5 +1,53 @@
 body {
-	background-color: #f0f0f0;
+	background-color: #fcfcfc;
 	font-family: "Lato";
-	font-size: 20pt;
+	font-size: 48pt;
+	margin-left: 32px;
+	-webkit-user-select: none;
+}
+.red {
+	background-color: #e42;
+}
+
+h1 {
+	font-size: 64pt;
+	width: 100%;
+	text-align: center;
+}
+
+input[type=checkbox] {
+	width: 56px;
+	height: 56px;
+	margin: 32px;
+}
+
+#container > div {
+	margin: 16px;
+	cursor: pointer;
+}
+
+a {
+	color: black;
+	cursor: pointer;
+	background-color: rgba(0, 0, 0, 0.1);
+	padding: 24px;
+	text-decoration: none;	
+	margin-left: 64px;
+	margin-top: 48px;
+	-webkit-touch-callout: none;
+	display: inline-block; 
+}
+
+span.bold {
+	display: inline-block;
+	float: right;
+	margin-top: 28px;
+	font-weight: bold;
+}
+
+.lr {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	margin: 0;
 }

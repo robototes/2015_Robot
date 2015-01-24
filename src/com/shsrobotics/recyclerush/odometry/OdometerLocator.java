@@ -22,8 +22,8 @@ public class OdometerLocator {
 		double c = Math.cos(h * Math.PI/180);
 		double s = Math.sin(h * Math.PI/180);
 		
-		x += (c*x - s*y) * dt;
-		y += (s*x + c*y) * dt;
+		x += (c*vx - s*vy) * dt;
+		y += (s*vx + c*vy) * dt;
 		
 		last = System.nanoTime();
 	}

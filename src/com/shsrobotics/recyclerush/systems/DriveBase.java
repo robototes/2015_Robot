@@ -15,7 +15,7 @@ public class DriveBase implements Hardware {
 		robotDrive.mecanumDrive_Cartesian(x, y, z, noGyroscope);
 	}
 	
-	public static double[][] getOutput() {
+	public static double[] getOutput() {
 		double x = driverJoystick.outputX();
 		double y = driverJoystick.outputY();
 		double z = driverJoystick.outputZ();
@@ -23,7 +23,7 @@ public class DriveBase implements Hardware {
 		y = y*y*y;
 		z = z*z*z;
 		
-		double[][] r = {{x}, {y}, {z}};
+		double[] r = {x, y, z};
 		
 		return r;
 	}

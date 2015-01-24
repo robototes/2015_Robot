@@ -1,37 +1,46 @@
 package com.shsrobotics.recyclerush.odometry;
 
-import org.ejml.simple.SimpleMatrix;
 import com.shsrobotics.recyclerush.Hardware;
 import com.shsrobotics.recyclerush.systems.DriveBase;
 
 public class Odometer implements Hardware {
-	
-//	private EncoderOdometer encoderOdometer = new EncoderOdometer();
+
 //	private AccGyrOdometer accGyrOdometer = new AccGyrOdometer();
+//	private EncoderOdometer encoderOdometer = new EncoderOdometer();
 	
-	double[][] H_ar = { {1, 0, 0}, {0, 1, 0}, {0, 0, 1}, {1, 0, 0}, {0, 1, 0}, {0, 0, 1} };
-	double[][] B_ar = { {Constants.MAX_STRAFE_SPEED, 0, 0}, {0, Constants.MAX_FOR_SPEED, 0}, {0, 0, Constants.MAX_ROT_SPEED} };
-	double q_cv = Constants.PROCESS_COVARIANCE;
-	double[][] Q_ar = { {q_cv, 0, 0}, {0, q_cv, 0}, {0, 0, q_cv} };
-	double r_cv = Constants.OBSERVATION_COVARIANCE;
-	double[][] R_ar = { 
-			{r_cv, 0, 0, 0, 0, 0},
-			{0, r_cv, 0, 0, 0, 0},
-			{0, 0, r_cv, 0, 0, 0},
-			{0, 0, 0, r_cv, 0, 0},
-			{0, 0, 0, 0, r_cv, 0},
-			{0, 0, 0, 0, 0, r_cv}
-		};
+	double x = 0;
+	double y = 0;
+	double h = 0;
 	
-	private SimpleMatrix x = new SimpleMatrix(3, 1); // state matrix
-	private SimpleMatrix P = new SimpleMatrix(3, 3); // state covariance
-	private SimpleMatrix B = new SimpleMatrix(B_ar); // control-input model
-	private SimpleMatrix H = new SimpleMatrix(H_ar); // observation model
-	private SimpleMatrix Q = new SimpleMatrix(Q_ar); // system covariance
-	private SimpleMatrix R = new SimpleMatrix(R_ar); // more covariance
-	private SimpleMatrix S = new SimpleMatrix(6, 6); // even more covariance
+	double det_S_x = Constants.PROCESS_VARIANCE[0] * (Constants.GYRO_OBSERVATION_VARIANCE[0] - 2 * Constants.OBSERVATION_COVARIANCE[0]
+			+ Constants.ENCODER_OBSERVATION_VARIANCE[0]) + Constants.GYRO_OBSERVATION_VARIANCE[0] * Constants.ENCODER_OBSERVATION_VARIANCE[0]
+			- Constants.OBSERVATION_COVARIANCE[0] * Constants.OBSERVATION_COVARIANCE[0];
+	double det_S_y = Constants.PROCESS_VARIANCE[1] * (Constants.GYRO_OBSERVATION_VARIANCE[1] - 2 * Constants.OBSERVATION_COVARIANCE[1]
+			+ Constants.ENCODER_OBSERVATION_VARIANCE[1]) + Constants.GYRO_OBSERVATION_VARIANCE[1] * Constants.ENCODER_OBSERVATION_VARIANCE[1]
+			- Constants.OBSERVATION_COVARIANCE[1] * Constants.OBSERVATION_COVARIANCE[1];
+	double det_S_h = Constants.PROCESS_VARIANCE[2] * (Constants.GYRO_OBSERVATION_VARIANCE[2] - 2 * Constants.OBSERVATION_COVARIANCE[2]
+			+ Constants.ENCODER_OBSERVATION_VARIANCE[2]) + Constants.GYRO_OBSERVATION_VARIANCE[2] * Constants.ENCODER_OBSERVATION_VARIANCE[2]
+			- Constants.OBSERVATION_COVARIANCE[2] * Constants.OBSERVATION_COVARIANCE[2];
+	double K_x_gyr = Constants.PROCESS_VARIANCE[0] * (2 * Constants.PROCESS_VARIANCE[0] + Constants.OBSERVATION_COVARIANCE[0] 
+			+ Constants.GYRO_OBSERVATION_VARIANCE[0]) / det_S_x;
+	double K_x_enc = Constants.PROCESS_VARIANCE[0] * (2 * Constants.PROCESS_VARIANCE[0] + Constants.OBSERVATION_COVARIANCE[0] 
+			+ Constants.ENCODER_OBSERVATION_VARIANCE[0]) / det_S_x;
+	double K_y_gyr = Constants.PROCESS_VARIANCE[1] * (2 * Constants.PROCESS_VARIANCE[1] + Constants.OBSERVATION_COVARIANCE[1] 
+			+ Constants.GYRO_OBSERVATION_VARIANCE[1]) / det_S_y;
+	double K_y_enc = Constants.PROCESS_VARIANCE[1] * (2 * Constants.PROCESS_VARIANCE[1] + Constants.OBSERVATION_COVARIANCE[1] 
+			+ Constants.ENCODER_OBSERVATION_VARIANCE[1]) / det_S_y;
+	double K_h_gyr = Constants.PROCESS_VARIANCE[2] * (2 * Constants.PROCESS_VARIANCE[2] + Constants.OBSERVATION_COVARIANCE[2] 
+			+ Constants.GYRO_OBSERVATION_VARIANCE[2]) / det_S_h;
+	double K_h_enc = Constants.PROCESS_VARIANCE[2] * (2 * Constants.PROCESS_VARIANCE[2] + Constants.OBSERVATION_COVARIANCE[2] 
+			+ Constants.ENCODER_OBSERVATION_VARIANCE[2]) / det_S_h;
 
 	public Odometer() {
+		K_x_gyr /= K_x_gyr + K_x_enc;
+		K_x_enc /= K_x_gyr + K_x_enc;
+		K_y_gyr /= K_y_gyr + K_y_enc;
+		K_y_enc /= K_y_gyr + K_y_enc;
+		K_h_gyr /= K_h_gyr + K_h_enc;
+		K_h_enc /= K_h_gyr + K_h_enc;
 	}
 	
 	public void reset() {	
@@ -39,35 +48,39 @@ public class Odometer implements Hardware {
 	}
 	
 	public void update() {
-//		double[][] eV = encoderOdometer.get();
-//		double[][] acV = accGyrOdometer.get();
-//		double[][] uV = DriveBase.getOutput();
-//		double[][] zV = { eV[0], eV[1], eV[2], acV[0], acV[1], acV[2] };
+//		double[] data = DriveBase.getOutput();
+//		double[] z_gyr = accGyrOdometer.get();
+//		double[] z_enc = encoderOdometer.get();
+		double[] data = Test.getOutput();
+		double[] in = Test.getInput();
+		double[] z_gyr = {in[3], in[4], in[5]};
+		double[] z_enc = {in[0], in[1], in[2]};
 		
-		double[][] uV = Test.getOutput();
-		double[][] zV = Test.getInput();
+		double x_p = Constants.MAX_STRAFE_SPEED * data[0];
+		double y_p = Constants.MAX_FOR_SPEED * data[1];
+		double h_p = Constants.MAX_ROT_SPEED * data[2];
 		
-		SimpleMatrix z = new SimpleMatrix(zV);
-		SimpleMatrix u = new SimpleMatrix(uV);
+		double diff_x_gyr = z_gyr[0] - x_p;
+		double diff_y_gyr = z_gyr[1] - y_p;
+		double diff_h_gyr = z_gyr[2] - h_p;
+		double diff_x_enc = z_enc[0] - x_p;
+		double diff_y_enc = z_enc[1] - y_p;
+		double diff_h_enc = z_enc[2] - h_p;
 		
-		SimpleMatrix x_p = x.plus(B.mult(u));
-		SimpleMatrix P_p = P.plus(Q);
-		SimpleMatrix y = z.minus(H.mult(x_p));
-		S = H.mult(P_p).mult(H.transpose()).plus(R);
-		SimpleMatrix K = P_p.mult(H.transpose()).mult(S.invert());
-		x = x_p.plus(K.mult(y));
-		P = SimpleMatrix.identity(3).minus(K.mult(H)).mult(P_p);
+		x = x_p + K_x_gyr * diff_x_gyr + K_x_enc * diff_x_enc;
+		y = y_p + K_y_gyr * diff_y_gyr + K_y_enc * diff_y_enc;
+		h = h_p + K_h_gyr * diff_h_gyr + K_h_enc * diff_h_enc;
 	}
 	
 	public double getXVelocity() {
-		return x.get(0, 0);
+		return x;
 	}
 	
 	public double getYVelocity() {
-		return x.get(1, 0);
+		return y;
 	}
 	
 	public double getAngularVelocity() {
-		return x.get(2, 0);
+		return h;
 	}
 }
