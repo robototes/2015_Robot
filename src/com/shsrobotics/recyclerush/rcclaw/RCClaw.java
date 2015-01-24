@@ -5,20 +5,23 @@ import com.shsrobotics.library.SubsystemState;
 import com.shsrobotics.library.Task;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
 
 public class RCClaw implements Subsystem {
 	
 	protected SpeedController motor;
 	protected AnalogPotentiometer pot;
+	protected DigitalInput isControlling;
 	boolean estop = false;
 	protected double setpoint;
 	protected double tolerance;
 	private Task currentTask;
 	
-	public RCClaw(SpeedController motor, AnalogPotentiometer pot) {
+	public RCClaw(SpeedController motor, AnalogPotentiometer pot, DigitalInput control) {
 		this.motor = motor;
 		this.pot = pot;
+		isControlling = control;
 	}
 	
 	public void setTolerance(double t) {
