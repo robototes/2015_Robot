@@ -15,15 +15,23 @@ package com.shsrobotics.recyclerush;
 import com.shsrobotics.library.FRCRobot;
 import com.shsrobotics.library.fieldpositioning.PID2D;
 import com.shsrobotics.library.fieldpositioning.RobotPosition;
+import com.shsrobotics.recyclerush.elevator.Elevator;
+import com.shsrobotics.recyclerush.gripper.Gripper;
+import com.shsrobotics.recyclerush.rcclaw.RCClaw;
+import com.shsrobotics.recyclerush.rollers.Rollers;
 
 public class Robot extends FRCRobot implements Hardware, RobotPosition {
 	
 	PID2D drivePID;
-	
+	Elevator elevator;
+	Gripper gripper;
+	Rollers rollers;
+	RCClaw rcClaw;
 	
 	@Override
 	public void robotInit() {
 		drivePID = new PID2D(null,this);
+		// init subsystems
 	}
 	
 	@Override

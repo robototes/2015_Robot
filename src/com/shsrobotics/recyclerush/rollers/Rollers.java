@@ -25,12 +25,20 @@ public class Rollers implements Subsystem {
 		potRight = pright;
 	}
 	
+	/**
+	 * experimental.
+	 */
 	public void startAdaption() {
 		if ( estop )
 			return;
 		
 	}
 	
+	/**
+	 * experimental variance.
+	 * @param r
+	 * @param l
+	 */
 	private void setSpeed(double r, double l) {
 		synchronized (speedTask.lock) {
 			speedTask.leftSpeed = l;
@@ -38,6 +46,9 @@ public class Rollers implements Subsystem {
 		}
 	}
 	
+	/**
+	 * experimental
+	 */
 	public void stopAdaption() {
 		if ( adaptionTask != null )
 			adaptionTask.stop();
@@ -49,6 +60,9 @@ public class Rollers implements Subsystem {
 		setSpeed(1,-1);
 	}
 	
+	/**
+	 * Sets rollers to roll totes into robot.
+	 */
 	public void setInput() {
 		if ( estop )
 			return;
