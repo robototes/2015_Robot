@@ -1,7 +1,8 @@
 package com.shsrobotics.recyclerush;
 
 import com.shsrobotics.library.GLOBAL;
-import com.shsrobotics.library.JoystickButton;
+import com.shsrobotics.library.JoystickButtonStart;
+import com.shsrobotics.library.JoystickCallbackButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -20,15 +21,29 @@ public interface Maps extends GLOBAL {
 	
 	public static final class Buttons {
 		// buttons are arbitrary right now.
-		public static JoystickButton elevatorPermButton = new JoystickButton(secondary, 5);
-		public static JoystickButton squeezeForkPermButton = new JoystickButton(secondary, 6);
-		public static JoystickButton rcClawPermButton = new JoystickButton(secondary, 10);
+		public static JoystickCallbackButton elevatorPermButton = new JoystickCallbackButton(secondary, 5, ()->{
+			
+		});
+		public static JoystickCallbackButton squeezeForkPermButton = new JoystickCallbackButton(secondary, 6, ()->{
+			
+		});
+		public static JoystickCallbackButton rcClawPermButton = new JoystickCallbackButton(secondary, 10, ()->{
+			
+		});
 		
-		public static JoystickButton elevatorUp = new JoystickButton(secondary, 7);
-		public static JoystickButton elevatorDown = new JoystickButton(secondary, 8);
+		public static JoystickCallbackButton elevatorUp = new JoystickCallbackButton(secondary, 7, ()->{
+			
+		});
+		public static JoystickCallbackButton elevatorDown = new JoystickCallbackButton(secondary, 8, ()->{
+			
+		});
 		
-		public static JoystickButton gripperState = new JoystickButton(secondary, 9);
+		public static JoystickCallbackButton gripperState = new JoystickCallbackButton(secondary, 9, ()->{
+			
+		});
 		
-		public static JoystickButton rcClawState = new JoystickButton(secondary, 11);
+		public static JoystickCallbackButton rcClawState = new JoystickCallbackButton(secondary, 11, ()->{
+			
+		});
 	}
-}
+};
