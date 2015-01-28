@@ -4,17 +4,13 @@ import com.shsrobotics.library.Task;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
-
-/*
- * Victor winchMotor = new Victor(4);
-		eleavator = new Elevator(winchMotor);
- */
+import edu.wpi.first.wpilibj.communication.HALAllianceStationID;
 
 
 /**
  * UpOne, DownOne, Setlevel(1-4), Encoder
  * @author s-moocj
- *
+ * {@link HALAllianceStationID} 100000000^0
  */
 
 public class Elevator {
@@ -37,7 +33,7 @@ public class Elevator {
 		winchMoveTask.stop();
 		setHeight = setHeight + 1;
 		setHeight = clamp(setHeight);
-		winchMoveTask = new WinchMoveTask();
+		winchMoveTask = new WinchMoveTask(); //Refreshing the Task, because it's turned off until this happens
 		winchMoveTask.start();
 	}
 	public void downOne(){
