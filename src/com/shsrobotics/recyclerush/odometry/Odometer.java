@@ -1,7 +1,7 @@
 package com.shsrobotics.recyclerush.odometry;
 
 import com.shsrobotics.recyclerush.Hardware;
-import com.shsrobotics.recyclerush.systems.DriveBase;
+import com.shsrobotics.recyclerush.drivebase.DriveBase;
 
 public class Odometer implements Hardware {
 

@@ -1,11 +1,11 @@
 package com.shsrobotics.recyclerush;
 
 import com.shsrobotics.library.GLOBAL;
-import com.shsrobotics.library.IIR;
+import com.shsrobotics.library.LowPassSmoother;
 
 public interface Maps extends GLOBAL {
 	
-	public static final IIR driverJoystick = new IIR(USB_0, new IIR.Smoothing(20, 20, 20));
+	public static final LowPassSmoother driverJoystick = new LowPassSmoother(USB_0, new LowPassSmoother.Smoothing(20, 20, 20));
 	
 	public static final class Constants {
 		public static final double WHEELS_DISTANCE_PER_PULSE = 0.01;
