@@ -11,14 +11,9 @@ public class ToteSet extends TaskList {
 	
 	@Override
 	public  void runTasks() {
-		this.runSequential();
-		try {
-			begin(new DriveTask());
-			
-		}
-		catch (InterruptedException ie) {
-			
-		}
+		this.runParallel();
+		//begin()
+		
 		
 	}
 

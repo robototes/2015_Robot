@@ -1,5 +1,7 @@
 package com.shsrobotics.recyclerush.rcclaw;
 
+import java.util.Map;
+
 import com.shsrobotics.library.Subsystem;
 import com.shsrobotics.library.SubsystemState;
 import com.shsrobotics.library.Task;
@@ -8,6 +10,12 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
 
+/**
+ * 
+ * @author s-orthm
+ * 
+ * network tables
+ */
 public class RCClaw implements Subsystem {
 	
 	protected SpeedController motor;
@@ -71,6 +79,12 @@ public class RCClaw implements Subsystem {
 			return SubsystemState.RUNNING;
 		else
 			return SubsystemState.IDLE;
+	}
+
+	@Override
+	public void returnState(Map<String, Object> keyvalue) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

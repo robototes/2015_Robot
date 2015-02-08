@@ -2,6 +2,7 @@ package com.shsrobotics.recyclerush.actions;
 
 import com.shsrobotics.library.PermissionAction;
 import com.shsrobotics.recyclerush.Hardware;
+import com.shsrobotics.recyclerush.Robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
@@ -20,14 +21,14 @@ public class ElevatorActions implements Hardware {
 			System.err.println("Unknown parameter type: ElevatorActions.autoMoveUp("+j+")");
 		}
 	}, (args)->{
-		return DriverStation.getInstance().isAutonomous() || Buttons.elevatorPermButton.held();	// TODO elevator UP predicate
+		return false;
 	});
 	
 	
 	public static PermissionAction autoMoveDown = new PermissionAction((args)->{
 		
 	},(args)->{
-		return DriverStation.getInstance().isAutonomous() || Buttons.elevatorPermButton.held();
+		return false;
 	});
 	
 }

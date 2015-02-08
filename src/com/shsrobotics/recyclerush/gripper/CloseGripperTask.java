@@ -22,19 +22,21 @@ public class CloseGripperTask extends Task {
 			done = true;
 			g.motor.set(0);
 		}
-		else if ( !g.limiter.get() ){
-			g.motor.set(1);
+		else if ( !g.outerLimit.get() ){
+			g.motor.set(.5);
 		}
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return done;
+		//boolean t = g.pdp.getCurrent(g.pdpChannel) > GripperConstants.CAPTURE_CURRENT_DRAW;
+		
+		return done;// || t;
 	}
 
 	@Override
 	protected void end() {
-		
+		System.out.println("close task end");
 	}
 
 }

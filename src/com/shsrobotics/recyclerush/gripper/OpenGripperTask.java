@@ -18,18 +18,20 @@ public class OpenGripperTask extends Task {
 
 	@Override
 	protected void execute() {
-		if ( g.limiter.get() ) {
+		if ( g.outerLimit.get() ) {
 			done = true;
 			g.motor.set(0);
 		}
 		else if ( !g.innerLimit.get() ){
-			g.motor.set(-1);
+			g.motor.set(-.5);
 		}
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return done;
+		boolean t = g.pdp.getCurrent(g.pdpChannel) > GripperConstants.CAPTURE_CURRENT_DRAW;
+		
+		return done || t;
 	}
 
 	@Override

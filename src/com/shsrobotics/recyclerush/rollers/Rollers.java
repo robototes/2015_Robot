@@ -1,5 +1,7 @@
 package com.shsrobotics.recyclerush.rollers;
 
+import java.util.Map;
+
 import com.shsrobotics.library.Subsystem;
 import com.shsrobotics.library.SubsystemState;
 import com.shsrobotics.library.Task;
@@ -8,6 +10,12 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
 
+/**
+ * 
+ * @author s-orthm
+ * 
+ * TODO networktables
+ */
 public class Rollers implements Subsystem {
 	
 	private boolean estop = false;
@@ -91,6 +99,12 @@ public class Rollers implements Subsystem {
 			return SubsystemState.RUNNING;
 		else
 			return SubsystemState.IDLE;
+	}
+
+	@Override
+	public void returnState(Map<String, Object> keyvalue) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.shsrobotics.recyclerush.elevator;
 
+import java.util.Map;
+
 import com.shsrobotics.library.Subsystem;
 import com.shsrobotics.library.SubsystemState;
 import com.shsrobotics.library.Task;
@@ -15,6 +17,8 @@ import edu.wpi.first.wpilibj.SpeedController;
  * Make sure this is reflected in hardware or stuff will break when it tries to go past the top or bottom.  
  * 
  * @author s-orthm
+ * 
+ * TODO networktables
  *
  */
 public class Elevator implements Subsystem {
@@ -99,6 +103,12 @@ public class Elevator implements Subsystem {
 			return SubsystemState.RUNNING;
 		else
 			return SubsystemState.IDLE;
+	}
+
+	@Override
+	public void returnState(Map<String, Object> keyvalue) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
