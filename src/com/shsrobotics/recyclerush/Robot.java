@@ -1,73 +1,75 @@
-/*
- * TEAM 2412
- *
- * JANUARY 2015
- *
- * FIRST ROBOTICS COMPETITION
- * RECYCLE RUSH
- * SOURCE CODE
- */
-
 package com.shsrobotics.recyclerush;
 
 import com.shsrobotics.library.FRCRobot;
-import com.shsrobotics.library.Task;
-import com.shsrobotics.library.TaskInterface;
-import com.shsrobotics.library.TaskList;
-import com.shsrobotics.recyclerush.drivebase.DriveBase;
-import com.shsrobotics.recyclerush.dashboard.RobotDashboard;
-import com.shsrobotics.recyclerush.auto.*;
+import com.shsrobotics.recyclerush.commands.AutoIntake;
+import com.shsrobotics.recyclerush.commands.CancelAutoIntake;
+import com.shsrobotics.recyclerush.commands.CloseGripper;
+import com.shsrobotics.recyclerush.commands.OpenGripper;
+import com.shsrobotics.recyclerush.commands.Release;
+import com.shsrobotics.recyclerush.commands.SetElevator;
+
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends FRCRobot implements Hardware {
+
+    public void robotInit() {
+    	super.robotInit();
+    }
 	
-	TaskList makeStack = new MakeStack();  
-	
-	@Override
-	public void robotInit() {
-		super.robotInit();
-	}
-	
-	@Override
-	public void autonomousInit() {
-		TaskInterface autonomous = null;
-		
-		switch ((int) dashboard.getNumber(Dashboard.AUTO_MODE, Enums.ROBOT_SET)) {
-			case Enums.STACK_SET:
-				autonomous = new StackSet();
-				break;
-			case Enums.ROBOT_SET:
-				autonomous = new RobotSet();
-				break;
-			case Enums.CENTER_CONTAINERS:
-				autonomous = new RobotSet();
-				break;
-			default:
-				autonomous = new RobotSet();
-				break;
-		}
-		
-		autonomous.start();
+	public void disabledPeriodic() {
+		Scheduler.getInstance().run();
 	}
 
-	@Override
-	public void autonomousPeriodic() {
-		
-	}
-	
-	public void teleopInit() {
-		
-	}
-	
-	@Override
-	public void teleopPeriodic() {
-		/*
-		 * DRIVE CODE
-		 */
-		DriveBase.drive();
-		
-		/*
-		 * DASHBOARD CODE
-		 */
-		RobotDashboard.updateView();
-	}
+    public void autonomousInit() { }
+
+    public void autonomousPeriodic() { }
+
+    public void teleopInit() { }
+
+    public void teleopPeriodic() {
+        /*
+         * COMMAND-BASED SCHEDULER
+         */
+    	Scheduler.getInstance().run();
+    	
+    	/*
+    	 * DRIVING
+    	 */
+        driveBase.drive(driverJoystick.outputX(), driverJoystick.outputY(), driverJoystick.outputZ());
+    	
+    	/*
+    	 * AUTOMATIC STACK MANAGMENT AND INTAKE
+    	 */
+        Buttons.autoIntake.whenPressed(new AutoIntake());	
+        	Buttons.autoIntake.whenReleased(new CancelAutoIntake());
+        Buttons.release.whenPressed(new Release());
+        
+        /*
+         * GRIPPER
+         */
+        Buttons.gripperOpen.whenPressed(new OpenGripper());
+        Buttons.gripperClose.whenPressed(new CloseGripper());
+        
+        /*
+         * ELEVATOR
+         */
+        double elevatorLevel = -2 * (driverJoystick.getThrottle() - 1);
+        if (Buttons.setElevatorDiscrete.pressed()) {
+        	new SetElevator(Math.floor(elevatorLevel));
+        } else if (Buttons.setElevatorContinuous.pressed()) {
+        	new SetElevator(elevatorLevel).start();
+        }
+        
+        /*
+         * ROLLERS
+         */
+        if (Buttons.rollersIn.pressed()) {
+        	rollerIntake.in();
+        } else if (Buttons.rollersOut.pressed()) {
+        	rollerIntake.out();
+        } else {
+        	rollerIntake.stop();
+        }
+    }
+    
 }
