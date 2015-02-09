@@ -3,7 +3,7 @@ package com.shsrobotics.recyclerush.odometry;
 import com.shsrobotics.recyclerush.Hardware;
 import edu.wpi.first.wpilibj.Timer;
 
-public class AccGyrOdometer implements Hardware {
+public class AccGyrOdometer implements Hardware.IDriveBase {
 	//velocity
 	private double[] v = {0, 0, 0};
 	Timer timer = new Timer();

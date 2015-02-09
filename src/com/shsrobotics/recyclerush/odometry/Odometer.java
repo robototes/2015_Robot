@@ -12,27 +12,27 @@ public class Odometer implements Hardware {
 	double y = 0;
 	double h = 0;
 	
-	double det_S_x = Constants.PROCESS_VARIANCE[0] * (Constants.GYRO_OBSERVATION_VARIANCE[0] - 2 * Constants.OBSERVATION_COVARIANCE[0]
-			+ Constants.ENCODER_OBSERVATION_VARIANCE[0]) + Constants.GYRO_OBSERVATION_VARIANCE[0] * Constants.ENCODER_OBSERVATION_VARIANCE[0]
-			- Constants.OBSERVATION_COVARIANCE[0] * Constants.OBSERVATION_COVARIANCE[0];
-	double det_S_y = Constants.PROCESS_VARIANCE[1] * (Constants.GYRO_OBSERVATION_VARIANCE[1] - 2 * Constants.OBSERVATION_COVARIANCE[1]
-			+ Constants.ENCODER_OBSERVATION_VARIANCE[1]) + Constants.GYRO_OBSERVATION_VARIANCE[1] * Constants.ENCODER_OBSERVATION_VARIANCE[1]
-			- Constants.OBSERVATION_COVARIANCE[1] * Constants.OBSERVATION_COVARIANCE[1];
-	double det_S_h = Constants.PROCESS_VARIANCE[2] * (Constants.GYRO_OBSERVATION_VARIANCE[2] - 2 * Constants.OBSERVATION_COVARIANCE[2]
-			+ Constants.ENCODER_OBSERVATION_VARIANCE[2]) + Constants.GYRO_OBSERVATION_VARIANCE[2] * Constants.ENCODER_OBSERVATION_VARIANCE[2]
-			- Constants.OBSERVATION_COVARIANCE[2] * Constants.OBSERVATION_COVARIANCE[2];
-	double K_x_gyr = Constants.PROCESS_VARIANCE[0] * (2 * Constants.PROCESS_VARIANCE[0] + Constants.OBSERVATION_COVARIANCE[0] 
-			+ Constants.GYRO_OBSERVATION_VARIANCE[0]) / det_S_x;
-	double K_x_enc = Constants.PROCESS_VARIANCE[0] * (2 * Constants.PROCESS_VARIANCE[0] + Constants.OBSERVATION_COVARIANCE[0] 
-			+ Constants.ENCODER_OBSERVATION_VARIANCE[0]) / det_S_x;
-	double K_y_gyr = Constants.PROCESS_VARIANCE[1] * (2 * Constants.PROCESS_VARIANCE[1] + Constants.OBSERVATION_COVARIANCE[1] 
-			+ Constants.GYRO_OBSERVATION_VARIANCE[1]) / det_S_y;
-	double K_y_enc = Constants.PROCESS_VARIANCE[1] * (2 * Constants.PROCESS_VARIANCE[1] + Constants.OBSERVATION_COVARIANCE[1] 
-			+ Constants.ENCODER_OBSERVATION_VARIANCE[1]) / det_S_y;
-	double K_h_gyr = Constants.PROCESS_VARIANCE[2] * (2 * Constants.PROCESS_VARIANCE[2] + Constants.OBSERVATION_COVARIANCE[2] 
-			+ Constants.GYRO_OBSERVATION_VARIANCE[2]) / det_S_h;
-	double K_h_enc = Constants.PROCESS_VARIANCE[2] * (2 * Constants.PROCESS_VARIANCE[2] + Constants.OBSERVATION_COVARIANCE[2] 
-			+ Constants.ENCODER_OBSERVATION_VARIANCE[2]) / det_S_h;
+	double det_S_x = Odometry.PROCESS_VARIANCE[0] * (Odometry.GYRO_OBSERVATION_VARIANCE[0] - 2 * Odometry.OBSERVATION_COVARIANCE[0]
+			+ Odometry.ENCODER_OBSERVATION_VARIANCE[0]) + Odometry.GYRO_OBSERVATION_VARIANCE[0] * Odometry.ENCODER_OBSERVATION_VARIANCE[0]
+			- Odometry.OBSERVATION_COVARIANCE[0] * Odometry.OBSERVATION_COVARIANCE[0];
+	double det_S_y = Odometry.PROCESS_VARIANCE[1] * (Odometry.GYRO_OBSERVATION_VARIANCE[1] - 2 * Odometry.OBSERVATION_COVARIANCE[1]
+			+ Odometry.ENCODER_OBSERVATION_VARIANCE[1]) + Odometry.GYRO_OBSERVATION_VARIANCE[1] * Odometry.ENCODER_OBSERVATION_VARIANCE[1]
+			- Odometry.OBSERVATION_COVARIANCE[1] * Odometry.OBSERVATION_COVARIANCE[1];
+	double det_S_h = Odometry.PROCESS_VARIANCE[2] * (Odometry.GYRO_OBSERVATION_VARIANCE[2] - 2 * Odometry.OBSERVATION_COVARIANCE[2]
+			+ Odometry.ENCODER_OBSERVATION_VARIANCE[2]) + Odometry.GYRO_OBSERVATION_VARIANCE[2] * Odometry.ENCODER_OBSERVATION_VARIANCE[2]
+			- Odometry.OBSERVATION_COVARIANCE[2] * Odometry.OBSERVATION_COVARIANCE[2];
+	double K_x_gyr = Odometry.PROCESS_VARIANCE[0] * (2 * Odometry.PROCESS_VARIANCE[0] + Odometry.OBSERVATION_COVARIANCE[0] 
+			+ Odometry.GYRO_OBSERVATION_VARIANCE[0]) / det_S_x;
+	double K_x_enc = Odometry.PROCESS_VARIANCE[0] * (2 * Odometry.PROCESS_VARIANCE[0] + Odometry.OBSERVATION_COVARIANCE[0] 
+			+ Odometry.ENCODER_OBSERVATION_VARIANCE[0]) / det_S_x;
+	double K_y_gyr = Odometry.PROCESS_VARIANCE[1] * (2 * Odometry.PROCESS_VARIANCE[1] + Odometry.OBSERVATION_COVARIANCE[1] 
+			+ Odometry.GYRO_OBSERVATION_VARIANCE[1]) / det_S_y;
+	double K_y_enc = Odometry.PROCESS_VARIANCE[1] * (2 * Odometry.PROCESS_VARIANCE[1] + Odometry.OBSERVATION_COVARIANCE[1] 
+			+ Odometry.ENCODER_OBSERVATION_VARIANCE[1]) / det_S_y;
+	double K_h_gyr = Odometry.PROCESS_VARIANCE[2] * (2 * Odometry.PROCESS_VARIANCE[2] + Odometry.OBSERVATION_COVARIANCE[2] 
+			+ Odometry.GYRO_OBSERVATION_VARIANCE[2]) / det_S_h;
+	double K_h_enc = Odometry.PROCESS_VARIANCE[2] * (2 * Odometry.PROCESS_VARIANCE[2] + Odometry.OBSERVATION_COVARIANCE[2] 
+			+ Odometry.ENCODER_OBSERVATION_VARIANCE[2]) / det_S_h;
 
 	public Odometer() {
 		K_x_gyr /= K_x_gyr + K_x_enc;
@@ -56,9 +56,9 @@ public class Odometer implements Hardware {
 		double[] z_gyr = {in[3], in[4], in[5]};
 		double[] z_enc = {in[0], in[1], in[2]};
 		
-		double x_p = Constants.MAX_STRAFE_SPEED * data[0];
-		double y_p = Constants.MAX_FOR_SPEED * data[1];
-		double h_p = Constants.MAX_ROT_SPEED * data[2];
+		double x_p = Odometry.MAX_STRAFE_SPEED * data[0];
+		double y_p = Odometry.MAX_FOR_SPEED * data[1];
+		double h_p = Odometry.MAX_ROT_SPEED * data[2];
 		
 		double diff_x_gyr = z_gyr[0] - x_p;
 		double diff_y_gyr = z_gyr[1] - y_p;
