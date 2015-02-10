@@ -54,6 +54,15 @@ public class Elevator extends PIDSubsystem implements Hardware.IElevator {
 	 */
 	public boolean isAtSetLevel() {
 		return onTarget();
+	}
+	
+	/**
+	 * Returns position
+	 * @return true if at very bottom
+	 */
+	public boolean isAtBottom() {
+		return lowerLimit.get();
+	}
 	
     /**
      * resets distance

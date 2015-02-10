@@ -11,23 +11,48 @@ import com.shsrobotics.recyclerush.stacks.StackManager;
 import com.shsrobotics.recyclerush.stacks.ToteIn;
 import com.shsrobotics.recyclerush.stacks.ToteOut;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends FRCRobot implements Hardware {
 
+	Command autonomousCommand;
+	
     public void robotInit() {
+    	/*
+    	 * INITIALIZATION
+    	 */
     	super.robotInit();
     }
 	
 	public void disabledPeriodic() {
+		/*
+		 * COMMAND-BASED SCHEDULER
+		 */
 		Scheduler.getInstance().run();
 	}
 
-    public void autonomousInit() { }
+    public void autonomousInit() {
+    	/*
+    	 * AUTONOMOUS SELECTION
+    	 */
+    	autonomousCommand = dashboard.getAutonomous();
+    	autonomousCommand.start();
+    }
 
-    public void autonomousPeriodic() { }
+    public void autonomousPeriodic() {
+    	/*
+    	 * COMMAND-BASED SCHEDULER
+    	 */
+    	Scheduler.getInstance().run();
+    }
 
-    public void teleopInit() { }
+    public void teleopInit() {
+    	/*
+    	 * CANCELLING AUTONOMOUS ROUTINE
+    	 */
+    	autonomousCommand.cancel();
+    }
 
     public void teleopPeriodic() {
         /*
@@ -67,6 +92,9 @@ public class Robot extends FRCRobot implements Hardware {
         	new SetElevator(Math.floor(elevatorLevel));
         } else if (Buttons.setElevatorContinuous.pressed()) {
         	new SetElevator(elevatorLevel).start();
+        }
+        if (elevator.isAtBottom()) {
+        	elevator.reset();
         }
         
         /*

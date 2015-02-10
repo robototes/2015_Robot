@@ -3,6 +3,7 @@ package com.shsrobotics.recyclerush;
 import com.shsrobotics.recyclerush.subsystems.DriveBase;
 import com.shsrobotics.recyclerush.subsystems.Elevator;
 import com.shsrobotics.recyclerush.subsystems.Gripper;
+import com.shsrobotics.recyclerush.subsystems.RobotDashboard;
 import com.shsrobotics.recyclerush.subsystems.RollerIntake;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
@@ -50,7 +51,7 @@ public interface Hardware extends Maps {
 		public static final DigitalInput upperLimit = new DigitalInput(DIGITAL_IO_4);
 	}
 	
-	public interface IDashboard {
+	public interface IDashboard extends Maps {
 		public static final NetworkTable dashboard = NetworkTable.getTable(Dashboard.TABLE_NAME);
 		public static final PowerDistributionPanel PDP = new PowerDistributionPanel();
 	}
@@ -59,5 +60,5 @@ public interface Hardware extends Maps {
 	public static final RollerIntake rollerIntake = new RollerIntake();
 	public static final Gripper gripper = new Gripper();
 	public static final Elevator elevator = new Elevator();
-	public static final Dashboard dashboard = new Dashboard();
+	public static final RobotDashboard dashboard = new RobotDashboard();
 }

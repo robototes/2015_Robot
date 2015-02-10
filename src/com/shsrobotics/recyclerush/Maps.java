@@ -24,28 +24,37 @@ public interface Maps extends GLOBAL {
   			setElevatorDiscrete = new com.shsrobotics.library.JoystickButton(driverJoystick, 11),
 	   		setElevatorContinuous = new com.shsrobotics.library.JoystickButton(driverJoystick, 12);
 	}
+	
+	public class PDPPorts {
+		public static final int
+			ELEV_MOTOR_A = 1,
+			ELEV_MOTOR_B = 2,
+			GRIPPER_MOTOR = 3;
+	}
    
 	public static final class Dashboard {
 		public static final String
 	   		TABLE_NAME = "ROBOT",
 	   		AUTO_MODE = "auto-mode",
-			FL_TALON_TEMP = "fl-talon-temp",
-			RL_TALON_TEMP = "rl-talon-temp",
-			FR_TALON_TEMP = "fr-talon-temp",
-			RR_TALON_TEMP = "rr-talon-temp",
-			FL_TALON_CURR = "fl-talon-curr",
-			RL_TALON_CURR = "rl-talon-curr",
-			FR_TALON_CURR = "fr-talon-curr",
-			RR_TALON_CURR = "rr-talon-curr",
 			PDP_TEMP = "pdp-temp",
-			PDP_VOLT = "pdp-volt";
+			PDP_VOLT = "pdp-volt",
+			PDP_CURR = "pdp-curr",
+			PDP_POWER = "pdp-power",
+			ELEV_A_CURR = "elevA-curr",
+			ELEV_B_CURR = "elevB-curr",
+			GRIPPER_CURR = "gripper-curr",
+			TOTE_COUNT = "toteCount";
 	}
 	
 	public static final class Autonomous {
 		public static final int
 			ROBOT_SET = 0,
-			STACK_SET = 1,
-			CENTER_CONTAINERS = 2;
+			TOTE_SET = 1,
+			STACK_SET = 2,
+			CENTER_CONTAINERS = 3;
+		public static final double
+			drivingSpeed = 0.6,
+			robotSetDrivingTime = 3;
 	}
 	
 	public static final class Odometry {
