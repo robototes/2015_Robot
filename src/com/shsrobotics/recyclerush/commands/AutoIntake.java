@@ -1,15 +1,17 @@
 package com.shsrobotics.recyclerush.commands;
 
+import com.shsrobotics.recyclerush.Hardware;
 import com.shsrobotics.recyclerush.stacks.StackManager;
 import com.shsrobotics.recyclerush.subsystems.Elevator;
 import com.shsrobotics.recyclerush.subsystems.Gripper;
+import com.shsrobotics.recyclerush.subsystems.Gripper.GripperState;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  * Automatically intakes totes and RCs and manages the stack
  */
-public class AutoIntake extends CommandGroup {
+public class AutoIntake extends CommandGroup implements Hardware {
     
 	double ROLLER_ELEV_DELAY = 0.1; // seconds after elevator starts moving before rollers can begin turning
 	double ROLLER_GRIP_DELAY = 0.4; // seconds after gripper starts moving before rollers can begin turning
@@ -26,7 +28,7 @@ public class AutoIntake extends CommandGroup {
     		addSequential(new SetElevator(0));
     	} else { // nothing in possession
     		addParallel(new SetElevator(0));
-    		if (Gripper.OPEN) {
+    		if (gripper.getState() == GripperState.OPEN) {
     			addSequential(new RollersIn());
     		} else {
     			addParallel(new OpenGripper());

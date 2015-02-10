@@ -27,9 +27,9 @@ public interface Maps extends GLOBAL {
 	
 	public class PDPPorts {
 		public static final int
-			ELEV_MOTOR_A = 1,
-			ELEV_MOTOR_B = 2,
-			GRIPPER_MOTOR = 3;
+			ELEV_MOTOR_A = 2,
+			ELEV_MOTOR_B = 3,
+			GRIPPER_MOTOR = 15;
 	}
    
 	public static final class Dashboard {

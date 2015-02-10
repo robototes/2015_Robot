@@ -11,9 +11,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
-import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -26,26 +24,26 @@ public interface Hardware extends Maps {
 			frontRight = new CANTalon(CAN_3),
 			rearLeft = new CANTalon(CAN_4),
 			rearRight = new CANTalon(CAN_5);
-		public static final RobotDrive robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
+//		public static final RobotDrive robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
 		public static final BuiltInAccelerometer accelerometer = new BuiltInAccelerometer();
 		public static final Gyro gyroscope = new Gyro(ANALOG_0);
 	}
 	
 	public interface IRollerIntake {
-		public static final SpeedController leftRoller = new Jaguar(PWM_1);
-		public static final SpeedController rightRoller = new Jaguar(PWM_2);
+		public static final SpeedController leftRoller = new Talon(PWM_1);
+		public static final SpeedController rightRoller = new Talon(PWM_0);
 		public static final DigitalInput toteStop = new DigitalInput(DIGITAL_IO_2);
 	}
 	
 	public interface IGripper {
-		public static final SpeedController gripperMotor = new Jaguar(PWM_0);
+		public static final SpeedController gripperMotor = new Talon(PWM_4);
 		public static final DigitalInput innerLimit = new DigitalInput(DIGITAL_IO_0);
 		public static final DigitalInput outerLimit = new DigitalInput(DIGITAL_IO_1);
 	}
 	
 	public interface IElevator {
-		public static final SpeedController elevatorMotorA = new Talon(CAN_0);
-		public static final SpeedController elevatorMotorB = new Talon(CAN_1);
+		public static final SpeedController elevatorMotorA = new Talon(PWM_3);
+		public static final SpeedController elevatorMotorB = new Talon(PWM_2);
 		public static final Encoder encoder = new Encoder(DIGITAL_IO_5, DIGITAL_IO_6);
 		public static final DigitalInput lowerLimit = new DigitalInput(DIGITAL_IO_3);
 		public static final DigitalInput upperLimit = new DigitalInput(DIGITAL_IO_4);

@@ -36,6 +36,7 @@ public class DriveBase extends Subsystem implements Hardware.IDriveBase {
 		frontRight.enableControl();
 		rearLeft.enableControl();
 		rearRight.enableControl();
+//		robotDrive.setSafetyEnabled(false);
 	}
 	
 	/**
@@ -45,7 +46,7 @@ public class DriveBase extends Subsystem implements Hardware.IDriveBase {
 	 * @param z rotation speed
 	 */
 	public void drive(double x, double y, double z) {
-		robotDrive.mecanumDrive_Cartesian(x*x*x, y*y*y, z*z*z, 0.0);
+//		robotDrive.mecanumDrive_Cartesian(x*x*x, y*y*y, z*z*z, 0.0);
 	}
 
     public void initDefaultCommand() { }

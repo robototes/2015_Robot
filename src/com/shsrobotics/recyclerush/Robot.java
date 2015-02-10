@@ -51,7 +51,7 @@ public class Robot extends FRCRobot implements Hardware {
     	/*
     	 * CANCELLING AUTONOMOUS ROUTINE
     	 */
-    	autonomousCommand.cancel();
+    	if (autonomousCommand != null) autonomousCommand.cancel();
     }
 
     public void teleopPeriodic() {
@@ -100,9 +100,9 @@ public class Robot extends FRCRobot implements Hardware {
         /*
          * ROLLERS
          */
-        if (Buttons.rollersIn.pressed()) {
+        if (Buttons.rollersIn.held()) {
         	rollerIntake.in();
-        } else if (Buttons.rollersOut.pressed()) {
+        } else if (Buttons.rollersOut.held()) {
         	rollerIntake.out();
         } else {
         	rollerIntake.stop();

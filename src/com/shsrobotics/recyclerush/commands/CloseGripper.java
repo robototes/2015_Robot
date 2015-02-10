@@ -25,7 +25,6 @@ public class CloseGripper extends Command implements Hardware {
 
     protected void end() {
     	gripper.stop();
-    	gripper.OPEN = false;
 	}
 
     protected void interrupted() {
