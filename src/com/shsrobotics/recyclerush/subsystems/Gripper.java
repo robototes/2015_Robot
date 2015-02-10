@@ -12,8 +12,6 @@ public class Gripper extends Subsystem implements Hardware.IGripper {
 	// normal motor operation speed
     static final double MOTOR_SPEED = 0.8;
     
-    public static boolean OPEN = false;
-    
     /**
      * Open the gripper
      */
@@ -51,6 +49,29 @@ public class Gripper extends Subsystem implements Hardware.IGripper {
     	return !outerLimit.get();
     }
     
+    /**
+     * Get state of system
+     * @return state enum
+     */
+    public GripperState getState() {
+    	GripperState r;
+    	if (gripperMotor.get() > 0) {
+    		r = GripperState.MOVING;
+    	} else if (getInnerLimit()) {
+    		r = GripperState.CLOSED;
+    	} else if (getOuterLimit()) {
+    		r = GripperState.OPEN;
+    	} else {
+    		r = GripperState.ERROR;
+    	}
+    	
+    	return r;
+    }
+    
     public void initDefaultCommand() { }
+    
+    public enum GripperState {
+    	OPEN, CLOSED, MOVING, ERROR;
+    }
 }
 

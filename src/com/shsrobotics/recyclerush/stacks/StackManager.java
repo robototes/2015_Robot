@@ -1,4 +1,4 @@
-package com.shsrobotics.recyclerush;
+package com.shsrobotics.recyclerush.stacks;
 
 public class StackManager {
 	public static boolean hasRC = false;

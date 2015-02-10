@@ -1,6 +1,6 @@
 package com.shsrobotics.recyclerush.commands;
 
-import com.shsrobotics.recyclerush.StackManager;
+import com.shsrobotics.recyclerush.stacks.StackManager;
 import com.shsrobotics.recyclerush.subsystems.Elevator;
 import com.shsrobotics.recyclerush.subsystems.Gripper;
 

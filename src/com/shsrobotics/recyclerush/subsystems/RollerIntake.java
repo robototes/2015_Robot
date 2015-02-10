@@ -16,6 +16,8 @@ public class RollerIntake extends Subsystem implements Hardware.IRollerIntake {
 	
 	// roller speed for normal operation
 	static final double ROLLER_SPEED = 0.95;
+	// less than this ~= 0
+	static final double MIN_SPEED = 0.1;
 	
 	/**
 	 * Bring game objects into the robot
@@ -47,6 +49,21 @@ public class RollerIntake extends Subsystem implements Hardware.IRollerIntake {
 	}
 	
 	/**
+	 * Get state of system
+	 * @return state enum
+	 */
+	public RollerState getState() {
+		double value = rightRoller.get();
+		RollerState r = RollerState.STOPPED; 
+		if (value > MIN_SPEED) {
+			r = RollerState.IN;
+		} else if (value < -MIN_SPEED) {
+			r = RollerState.OUT;
+		}
+		return r;
+	}
+	
+	/**
 	 * Set motor speeds
 	 * @param speed
 	 */
@@ -56,5 +73,9 @@ public class RollerIntake extends Subsystem implements Hardware.IRollerIntake {
 	}
 
     public void initDefaultCommand() { }
+    
+    public enum RollerState {
+    	IN, OUT, STOPPED, ERROR;
+    }
 }
 

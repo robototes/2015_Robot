@@ -7,6 +7,9 @@ import com.shsrobotics.recyclerush.commands.CloseGripper;
 import com.shsrobotics.recyclerush.commands.OpenGripper;
 import com.shsrobotics.recyclerush.commands.Release;
 import com.shsrobotics.recyclerush.commands.SetElevator;
+import com.shsrobotics.recyclerush.stacks.StackManager;
+import com.shsrobotics.recyclerush.stacks.ToteIn;
+import com.shsrobotics.recyclerush.stacks.ToteOut;
 
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -43,6 +46,12 @@ public class Robot extends FRCRobot implements Hardware {
         Buttons.autoIntake.whenPressed(new AutoIntake());	
         	Buttons.autoIntake.whenReleased(new CancelAutoIntake());
         Buttons.release.whenPressed(new Release());
+        // track object possession
+        if (ToteIn.get()) {
+        	StackManager.totes++;
+        } else if (ToteOut.get()) {
+        	StackManager.totes = 0;
+        }
         
         /*
          * GRIPPER

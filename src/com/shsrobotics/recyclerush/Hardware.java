@@ -1,6 +1,5 @@
 package com.shsrobotics.recyclerush;
 
-import com.shsrobotics.recyclerush.Maps.Dashboard;
 import com.shsrobotics.recyclerush.subsystems.DriveBase;
 import com.shsrobotics.recyclerush.subsystems.Elevator;
 import com.shsrobotics.recyclerush.subsystems.Gripper;
@@ -9,11 +8,13 @@ import com.shsrobotics.recyclerush.subsystems.RollerIntake;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public interface Hardware extends Maps {
@@ -42,8 +43,9 @@ public interface Hardware extends Maps {
 	}
 	
 	public interface IElevator {
-		public static final CANTalon elevatorMotorA = new CANTalon(CAN_0);
-		public static final CANTalon elevatorMotorB = new CANTalon(CAN_1);
+		public static final SpeedController elevatorMotorA = new Talon(CAN_0);
+		public static final SpeedController elevatorMotorB = new Talon(CAN_1);
+		public static final Encoder encoder = new Encoder(DIGITAL_IO_5, DIGITAL_IO_6);
 		public static final DigitalInput lowerLimit = new DigitalInput(DIGITAL_IO_3);
 		public static final DigitalInput upperLimit = new DigitalInput(DIGITAL_IO_4);
 	}
