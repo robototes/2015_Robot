@@ -63,20 +63,20 @@ public class Robot extends FRCRobot implements Hardware {
     	/*
     	 * DRIVING
     	 */
-        driveBase.drive(driverJoystick.outputX(), driverJoystick.outputY(), driverJoystick.outputZ());
+//        driveBase.drive(driverJoystick.outputX(), driverJoystick.outputY(), driverJoystick.outputZ());
     	
     	/*
     	 * AUTOMATIC STACK MANAGMENT AND INTAKE
     	 */
-        Buttons.autoIntake.whenPressed(new AutoIntake());	
-        	Buttons.autoIntake.whenReleased(new CancelAutoIntake());
-        Buttons.release.whenPressed(new Release());
-        // track object possession
-        if (ToteIn.get()) {
-        	StackManager.totes++;
-        } else if (ToteOut.get()) {
-        	StackManager.totes = 0;
-        }
+//        Buttons.autoIntake.whenPressed(new AutoIntake());	
+//        	Buttons.autoIntake.whenReleased(new CancelAutoIntake());
+//        Buttons.release.whenPressed(new Release());
+//        // track object possession
+//        if (ToteIn.get()) {
+//        	StackManager.totes++;
+//        } else if (ToteOut.get()) {
+//        	StackManager.totes = 0;
+//        }
         
         /*
          * GRIPPER
@@ -87,26 +87,26 @@ public class Robot extends FRCRobot implements Hardware {
         /*
          * ELEVATOR
          */
-        double elevatorLevel = -2 * (driverJoystick.getThrottle() - 1);
-        if (Buttons.setElevatorDiscrete.pressed()) {
-        	new SetElevator(Math.floor(elevatorLevel));
-        } else if (Buttons.setElevatorContinuous.pressed()) {
-        	new SetElevator(elevatorLevel).start();
-        }
-        if (elevator.isAtBottom()) {
-        	elevator.reset();
-        }
+//        double elevatorLevel = -2 * (driverJoystick.getThrottle() - 1);
+//        if (Buttons.setElevatorDiscrete.pressed()) {
+//        	new SetElevator(Math.floor(elevatorLevel));
+//        } else if (Buttons.setElevatorContinuous.pressed()) {
+//        	new SetElevator(elevatorLevel).start();
+//        }
+//        if (elevator.isAtBottom()) {
+//        	elevator.reset();
+//        }
         
         /*
          * ROLLERS
          */
-        if (Buttons.rollersIn.held()) {
-        	rollerIntake.in();
-        } else if (Buttons.rollersOut.held()) {
-        	rollerIntake.out();
-        } else {
-        	rollerIntake.stop();
-        }
+//        if (Buttons.rollersIn.held()) {
+//        	rollerIntake.in();
+//        } else if (Buttons.rollersOut.held()) {
+//        	rollerIntake.out();
+//        } else {
+//        	rollerIntake.stop();
+//        }
     }
     
 }

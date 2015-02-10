@@ -7,10 +7,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * The gripper on the elevator
  */
-public class Gripper extends Subsystem implements Hardware.IGripper {
+public class Gripper extends Subsystem implements Hardware.IGripper, Hardware.IDashboard {
     
 	// normal motor operation speed
     static final double MOTOR_SPEED = 0.8;
+    // current threshold for motor stop
+    static final double CURRENT_THRESHOLD = 32;
     
     /**
      * Open the gripper
@@ -38,7 +40,7 @@ public class Gripper extends Subsystem implements Hardware.IGripper {
      * @return true if at inner limit
      */
     public boolean getInnerLimit() {
-    	return !innerLimit.get();
+    	return (!innerLimit.get() || PDP.getCurrent(PDPPorts.GRIPPER_MOTOR) > CURRENT_THRESHOLD);
     }
     
     /**
