@@ -1,6 +1,7 @@
 package com.shsrobotics.recyclerush;
 
 import com.shsrobotics.library.FRCRobot;
+import com.shsrobotics.recyclerush.auto.Autonomous2015;
 import com.shsrobotics.recyclerush.commands.AutoIntake;
 import com.shsrobotics.recyclerush.commands.CancelAutoIntake;
 import com.shsrobotics.recyclerush.commands.CloseGripper;
@@ -16,13 +17,18 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends FRCRobot implements Hardware {
 
-	Command autonomousCommand;
+	Autonomous2015 autonomousCommand;
 	
     public void robotInit() {
     	/*
     	 * INITIALIZATION
     	 */
     	super.robotInit();
+    	
+    	/*
+		 * COMMAND-BASED SCHEDULER
+		 */
+		Scheduler.getInstance().run();
     }
 	
 	public void disabledPeriodic() {
@@ -38,6 +44,9 @@ public class Robot extends FRCRobot implements Hardware {
     	 */
     	autonomousCommand = dashboard.getAutonomous();
     	autonomousCommand.start();
+    	IDriveBase.robotPosition.x = autonomousCommand.getStartingX();
+    	IDriveBase.robotPosition.y = autonomousCommand.getStartingY();
+    	IDriveBase.robotPosition.h = autonomousCommand.getStartingHeading();
     }
 
     public void autonomousPeriodic() {
@@ -54,7 +63,7 @@ public class Robot extends FRCRobot implements Hardware {
     	if (autonomousCommand != null) autonomousCommand.cancel();
     }
 
-    public void teleopPeriodic() {
+    public void teleopPeriodic() { // TODO: UNCOMMENT
         /*
          * COMMAND-BASED SCHEDULER
          */
@@ -63,7 +72,8 @@ public class Robot extends FRCRobot implements Hardware {
     	/*
     	 * DRIVING
     	 */
-//        driveBase.drive(driverJoystick.outputX(), driverJoystick.outputY(), driverJoystick.outputZ());
+        driveBase.drive(driverJoystick.outputX(), driverJoystick.outputY(), driverJoystick.outputZ());
+//        driveBase.updateOdometer();
     	
     	/*
     	 * AUTOMATIC STACK MANAGMENT AND INTAKE
@@ -81,8 +91,8 @@ public class Robot extends FRCRobot implements Hardware {
         /*
          * GRIPPER
          */
-        Buttons.gripperOpen.whenPressed(new OpenGripper());
-        Buttons.gripperClose.whenPressed(new CloseGripper());
+//        Buttons.gripperOpen.whenPressed(new OpenGripper());
+//        Buttons.gripperClose.whenPressed(new CloseGripper());
         
         /*
          * ELEVATOR
@@ -107,6 +117,17 @@ public class Robot extends FRCRobot implements Hardware {
 //        } else {
 //        	rollerIntake.stop();
 //        }
+        
+        /*
+         * RC CLAW
+         */
+        if (Buttons.clawUp.held()) {
+        	claw.up();
+        } else if (Buttons.clawDown.held()) {
+        	claw.down();
+        } else {
+        	claw.stop();
+        }
     }
     
 }

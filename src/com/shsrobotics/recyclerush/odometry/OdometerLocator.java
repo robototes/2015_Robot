@@ -1,8 +1,12 @@
 package com.shsrobotics.recyclerush.odometry;
 
-public class OdometerLocator {
+import com.shsrobotics.library.fieldpositioning.PID2D;
+import com.shsrobotics.library.fieldpositioning.RobotPosition;
+
+public class OdometerLocator implements RobotPosition {
 	public double x, y, h;
 	private long last;
+	private double COLLISION_RADIUS = 21.0;
 	
 	public OdometerLocator(double x, double y, double h) {
 		this.x = x;
@@ -27,4 +31,15 @@ public class OdometerLocator {
 		
 		last = System.nanoTime();
 	}
+	
+	public double getX() { return x; }
+	public double getY() { return y; }
+	public double getHeading() { return h; }
+	public double getCollisionRadius() { return COLLISION_RADIUS; }
+
+	@Override
+	public PID2D getPID() {
+		return null;
+	}
+
 }

@@ -21,6 +21,8 @@ public interface Maps extends GLOBAL {
 	   public static final com.shsrobotics.library.JoystickButton
   			rollersIn = new com.shsrobotics.library.JoystickButton(driverJoystick, 3),
   			rollersOut = new com.shsrobotics.library.JoystickButton(driverJoystick, 5),
+  			clawUp = new com.shsrobotics.library.JoystickButton(driverJoystick, 9),
+  			clawDown = new com.shsrobotics.library.JoystickButton(driverJoystick, 10),
   			setElevatorDiscrete = new com.shsrobotics.library.JoystickButton(driverJoystick, 11),
 	   		setElevatorContinuous = new com.shsrobotics.library.JoystickButton(driverJoystick, 12);
 	}

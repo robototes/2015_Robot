@@ -4,8 +4,8 @@ import com.shsrobotics.recyclerush.Hardware;
 
 public class Odometer implements Hardware {
 
-//	private AccGyrOdometer accGyrOdometer = new AccGyrOdometer();
-//	private EncoderOdometer encoderOdometer = new EncoderOdometer();
+	private AccGyrOdometer accGyrOdometer = new AccGyrOdometer();
+	private EncoderOdometer encoderOdometer = new EncoderOdometer();
 	
 	double x = 0;
 	double y = 0;
@@ -47,28 +47,24 @@ public class Odometer implements Hardware {
 	}
 	
 	public void update() {
-//		double[] data = DriveBase.getOutput();
-//		double[] z_gyr = accGyrOdometer.get();
-//		double[] z_enc = encoderOdometer.get();
-//		double[] data = Test.getOutput();
-//		double[] in = Test.getInput();
-//		double[] z_gyr = {in[3], in[4], in[5]};
-//		double[] z_enc = {in[0], in[1], in[2]};
-//		
-//		double x_p = Odometry.MAX_STRAFE_SPEED * data[0];
-//		double y_p = Odometry.MAX_FOR_SPEED * data[1];
-//		double h_p = Odometry.MAX_ROT_SPEED * data[2];
-//		
-//		double diff_x_gyr = z_gyr[0] - x_p;
-//		double diff_y_gyr = z_gyr[1] - y_p;
-//		double diff_h_gyr = z_gyr[2] - h_p;
-//		double diff_x_enc = z_enc[0] - x_p;
-//		double diff_y_enc = z_enc[1] - y_p;
-//		double diff_h_enc = z_enc[2] - h_p;
-//		
-//		x = x_p + K_x_gyr * diff_x_gyr + K_x_enc * diff_x_enc;
-//		y = y_p + K_y_gyr * diff_y_gyr + K_y_enc * diff_y_enc;
-//		h = h_p + K_h_gyr * diff_h_gyr + K_h_enc * diff_h_enc;
+		double[] data = driveBase.getOutput();
+		double[] z_gyr = accGyrOdometer.get();
+		double[] z_enc = encoderOdometer.get();
+		
+		double x_p = Odometry.MAX_STRAFE_SPEED * data[0];
+		double y_p = Odometry.MAX_FOR_SPEED * data[1];
+		double h_p = Odometry.MAX_ROT_SPEED * data[2];
+		
+		double diff_x_gyr = z_gyr[0] - x_p;
+		double diff_y_gyr = z_gyr[1] - y_p;
+		double diff_h_gyr = z_gyr[2] - h_p;
+		double diff_x_enc = z_enc[0] - x_p;
+		double diff_y_enc = z_enc[1] - y_p;
+		double diff_h_enc = z_enc[2] - h_p;
+		
+		x = x_p + K_x_gyr * diff_x_gyr + K_x_enc * diff_x_enc;
+		y = y_p + K_y_gyr * diff_y_gyr + K_y_enc * diff_y_enc;
+		h = h_p + K_h_gyr * diff_h_gyr + K_h_enc * diff_h_enc;
 	}
 	
 	public double getXVelocity() {

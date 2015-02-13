@@ -5,7 +5,7 @@ import com.shsrobotics.recyclerush.commands.AutoIntake;
 import com.shsrobotics.recyclerush.commands.CancelAutoIntake;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class RobotSet extends Command implements Hardware {
+public class RobotSet extends Command implements Hardware, Autonomous2015 {
 
 	@Override
 	protected void initialize() {
@@ -29,6 +29,21 @@ public class RobotSet extends Command implements Hardware {
 	@Override
 	protected void interrupted() {
 		end();
+	}
+
+	@Override
+	public double getStartingX() {
+		return 0;
+	}
+
+	@Override
+	public double getStartingY() {
+		return 0;
+	}
+
+	@Override
+	public double getStartingHeading() {
+		return 0;
 	}
 
 }

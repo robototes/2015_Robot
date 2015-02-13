@@ -1,6 +1,7 @@
 package com.shsrobotics.recyclerush.subsystems;
 
 import com.shsrobotics.recyclerush.Hardware;
+import com.shsrobotics.recyclerush.auto.Autonomous2015;
 import com.shsrobotics.recyclerush.auto.RobotSet;
 import com.shsrobotics.recyclerush.auto.ToteSet;
 import com.shsrobotics.recyclerush.stacks.StackManager;
@@ -34,9 +35,9 @@ public class RobotDashboard extends Subsystem implements Hardware.IDashboard {
      * Get the selected autonomous command
      * @return the command to run
      */
-    public Command getAutonomous() {
+    public Autonomous2015 getAutonomous() {
     	int choice = (int) dashboard.getNumber(Dashboard.AUTO_MODE);
-    	Command r;
+    	Autonomous2015 r;
     	
     	switch(choice) {
     		case Autonomous.ROBOT_SET:
