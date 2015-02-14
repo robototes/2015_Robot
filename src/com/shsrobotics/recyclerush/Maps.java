@@ -2,14 +2,14 @@ package com.shsrobotics.recyclerush;
 
 import com.shsrobotics.library.GLOBAL;
 import com.shsrobotics.library.LowPassFilterJoystick;
-import com.shsrobotics.library.LowPassFilterJoystick.Smoothing;
 import com.shsrobotics.library.joysticks.Extreme3DController;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public interface Maps extends GLOBAL {
-	public static final LowPassFilterJoystick driverJoystick = new LowPassFilterJoystick(USB_0, new Smoothing(20, 20, 20));
+	public static final LowPassFilterJoystick driverJoystick = new LowPassFilterJoystick(USB_0, 15, 15, 12);
    
 	public class Buttons {
 		public static final Button

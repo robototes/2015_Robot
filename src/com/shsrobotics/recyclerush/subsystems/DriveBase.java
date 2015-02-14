@@ -54,13 +54,14 @@ public class DriveBase extends Subsystem implements Hardware.IDriveBase, PID2DOu
 //		rearLeft.enableControl();
 //		rearRight.enableControl();
 		
+//		fieldPID.setPIDX(P_X, I_X, D_X);
+//		fieldPID.setPIDY(P_Y, I_Y, D_Y);
+//		fieldPID.setPIDZ(P_H, I_H, D_H);
+
 //		robotDrive.setSafetyEnabled(false);
-		fieldPID.setPIDX(P_X, I_X, D_X);
-		fieldPID.setPIDY(P_Y, I_Y, D_Y);
-		fieldPID.setPIDZ(P_H, I_H, D_H);
 		
-		robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
-		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
+//		robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
+//		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
 	}
 	
 	/**
@@ -70,7 +71,13 @@ public class DriveBase extends Subsystem implements Hardware.IDriveBase, PID2DOu
 	 * @param z rotation speed
 	 */
 	public void drive(double x, double y, double z) {
-		robotDrive.mecanumDrive_Cartesian(x, y, z, 0.0);
+//		robotDrive.mecanumDrive_Cartesian(x, y, z, 0.0);
+
+		frontLeft.set(y);
+		frontRight.set(-y);
+		rearLeft.set(y);
+		rearRight.set(-y);
+		
 		this.x = x;
 		this.y = y;
 		this.h = z;
@@ -83,7 +90,7 @@ public class DriveBase extends Subsystem implements Hardware.IDriveBase, PID2DOu
 		double v_x = odometer.getXVelocity();
 		double v_y = odometer.getYVelocity();
 		double v_h = odometer.getAngularVelocity();
-		robotPosition.update(v_x, v_y, v_h);
+//		robotPosition.update(v_x, v_y, v_h);
 	}
 
 	/**
@@ -98,7 +105,8 @@ public class DriveBase extends Subsystem implements Hardware.IDriveBase, PID2DOu
 	 * @return true if yes
 	 */
 	public boolean isOnTarget() {
-		return fieldPID.isOnTarget();
+//		return fieldPID.isOnTarget(); // TODO: uncomment
+		return false;
 	}
 	
 	/**

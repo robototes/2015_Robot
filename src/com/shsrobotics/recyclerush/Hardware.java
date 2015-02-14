@@ -29,7 +29,7 @@ public interface Hardware extends Maps { // TODO: FINALIZE PORTS
 			frontRight = new CANTalon(CAN_3),
 			rearLeft = new CANTalon(CAN_4),
 			rearRight = new CANTalon(CAN_5);
-		public static final RobotDrive robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
+//		public static final RobotDrive robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
 		public static final BuiltInAccelerometer accelerometer = new BuiltInAccelerometer(); // TODO: DECIDE WHICH ACCEL USING
 		public static final Gyro gyroscope = new Gyro(ANALOG_0); // TODO: ATTACH
 		public static final Odometer odometer= new Odometer();

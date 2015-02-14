@@ -37,7 +37,6 @@ public class OdometerLocator implements RobotPosition {
 	public double getHeading() { return h; }
 	public double getCollisionRadius() { return COLLISION_RADIUS; }
 
-	@Override
 	public PID2D getPID() {
 		return null;
 	}
