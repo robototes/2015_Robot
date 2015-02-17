@@ -1,11 +1,11 @@
 package com.shsrobotics.recyclerush.auto;
 
-import com.shsrobotics.recyclerush.Hardware;
+import static com.shsrobotics.recyclerush.Hardware.*;
 import com.shsrobotics.recyclerush.commands.AutoIntake;
 import com.shsrobotics.recyclerush.commands.CancelAutoIntake;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ToteSet extends Command implements Hardware, Autonomous2015 {
+public class ToteSet extends Command implements Autonomous2015 {
 
 	@Override
 	protected void initialize() {

@@ -1,9 +1,9 @@
 package com.shsrobotics.recyclerush.odometry;
 
-import com.shsrobotics.recyclerush.Hardware;
+import static com.shsrobotics.recyclerush.Hardware.IDriveBase.*;
 import edu.wpi.first.wpilibj.Timer;
 
-public class AccGyrOdometer implements Hardware.IDriveBase {
+public class AccGyrOdometer {
 	//velocity
 	private double[] v = {0, 0, 0};
 	Timer timer = new Timer();
@@ -25,8 +25,8 @@ public class AccGyrOdometer implements Hardware.IDriveBase {
 		timer.stop();
 		double t = timer.get();
 		
-		v[0] += accelerometer.getX() * t;
-		v[1] += accelerometer.getY() * t;
+		v[0] += accelerometerX.getAcceleration() * t;
+		v[1] += accelerometerY.getAcceleration() * t;
 		v[2] = gyroscope.getRate();
 		
 		timer.reset();

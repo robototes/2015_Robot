@@ -1,18 +1,24 @@
 package com.shsrobotics.recyclerush.subsystems;
 
-import com.shsrobotics.recyclerush.Hardware;
+import static com.shsrobotics.recyclerush.Hardware.IGripper.*;
+import static com.shsrobotics.recyclerush. Hardware.IDashboard.*;
+
+import com.shsrobotics.recyclerush.Maps.PDPPorts;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * The gripper on the elevator
  */
-public class Gripper extends Subsystem implements Hardware.IGripper, Hardware.IDashboard {
+public class Gripper extends Subsystem {
     
 	// normal motor operation speed
     static final double MOTOR_SPEED = 0.8;
     // current threshold for motor stop
-    static final double CURRENT_THRESHOLD = 32;
+    static final double CURRENT_THRESHOLD_IN = 36;
+    static final double CURRENT_THRESHOLD_OUT = 40;
+    
+    double lastCurrent = 0;
     
     /**
      * Open the gripper
@@ -37,18 +43,20 @@ public class Gripper extends Subsystem implements Hardware.IGripper, Hardware.ID
     
     /**
      * Get state of gripper
+     * @param useCurrentThresholding
      * @return true if at inner limit
      */
     public boolean getInnerLimit() {
-    	return (!innerLimit.get() || PDP.getCurrent(PDPPorts.GRIPPER_MOTOR) > CURRENT_THRESHOLD);
+    	return (innerLimit.get() || pdp.getCurrent(PDPPorts.GRIPPER_MOTOR) > CURRENT_THRESHOLD_IN);
     }
     
     /**
      * Get state of gripper
+     * @param useCurrentThresholding
      * @return true if at outer limit
      */
     public boolean getOuterLimit() {
-    	return !outerLimit.get();
+    	return (outerLimit.get() || pdp.getCurrent(PDPPorts.GRIPPER_MOTOR) > CURRENT_THRESHOLD_OUT);
     }
     
     /**

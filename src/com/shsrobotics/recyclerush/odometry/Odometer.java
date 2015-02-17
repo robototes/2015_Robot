@@ -1,8 +1,11 @@
 package com.shsrobotics.recyclerush.odometry;
 
-import com.shsrobotics.recyclerush.Hardware;
+import static com.shsrobotics.recyclerush.Hardware.*;
 
-public class Odometer implements Hardware {
+import com.shsrobotics.recyclerush.Maps;
+import com.shsrobotics.recyclerush.Maps.Odometry;
+
+public class Odometer implements Maps {
 
 	private AccGyrOdometer accGyrOdometer = new AccGyrOdometer();
 	private EncoderOdometer encoderOdometer = new EncoderOdometer();
@@ -10,7 +13,7 @@ public class Odometer implements Hardware {
 	double x = 0;
 	double y = 0;
 	double h = 0;
-	
+
 	double det_S_x = Odometry.PROCESS_VARIANCE[0] * (Odometry.GYRO_OBSERVATION_VARIANCE[0] - 2 * Odometry.OBSERVATION_COVARIANCE[0]
 			+ Odometry.ENCODER_OBSERVATION_VARIANCE[0]) + Odometry.GYRO_OBSERVATION_VARIANCE[0] * Odometry.ENCODER_OBSERVATION_VARIANCE[0]
 			- Odometry.OBSERVATION_COVARIANCE[0] * Odometry.OBSERVATION_COVARIANCE[0];

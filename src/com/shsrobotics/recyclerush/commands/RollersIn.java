@@ -1,6 +1,6 @@
 package com.shsrobotics.recyclerush.commands;
 
-import com.shsrobotics.recyclerush.Hardware;
+import static com.shsrobotics.recyclerush.Hardware.*;
 import com.shsrobotics.recyclerush.subsystems.RollerIntake;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,20 +8,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Brings object into robot
  */
-public class RollersIn extends Command implements Hardware {
+public class RollersIn extends Command {
 
     public RollersIn() {
         requires(rollerIntake);
     }
 
     protected void initialize() {
+    	rollerIntake.setManual(false);
     	rollerIntake.in();
     }
 
     protected void execute() { }
 
     protected boolean isFinished() {
-        return rollerIntake.isObjectIn();
+        return rollerIntake.isToteIn();
     }
 
     protected void end() {

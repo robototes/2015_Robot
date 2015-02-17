@@ -1,20 +1,24 @@
 package com.shsrobotics.recyclerush.auto;
 
-import com.shsrobotics.recyclerush.Hardware;
+import static com.shsrobotics.recyclerush.Maps.Autonomous;
 import com.shsrobotics.recyclerush.commands.AutoIntake;
 import com.shsrobotics.recyclerush.commands.CancelAutoIntake;
-import edu.wpi.first.wpilibj.command.Command;
 
-public class RobotSet extends Command implements Hardware, Autonomous2015 {
+import edu.wpi.first.wpilibj.command.Command;
+import static com.shsrobotics.recyclerush.Hardware.*;
+import static com.shsrobotics.recyclerush.Hardware.IDriveBase.*;
+
+public class RobotSet extends Command implements Autonomous2015 {
 
 	@Override
 	protected void initialize() {
-		driveBase.drive(0.0, Autonomous.drivingSpeed, 0.0);
 		setTimeout(Autonomous.robotSetDrivingTime);
 	}
 
 	@Override
-	protected void execute() { }
+	protected void execute() {
+		driveBase.drive(0.0, Autonomous.drivingSpeed, 0.0);
+	}
 
 	@Override
 	protected boolean isFinished() {

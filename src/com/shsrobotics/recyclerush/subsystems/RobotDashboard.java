@@ -1,34 +1,44 @@
 package com.shsrobotics.recyclerush.subsystems;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 import com.shsrobotics.recyclerush.Hardware;
 import com.shsrobotics.recyclerush.auto.Autonomous2015;
 import com.shsrobotics.recyclerush.auto.RobotSet;
 import com.shsrobotics.recyclerush.auto.ToteSet;
 import com.shsrobotics.recyclerush.stacks.StackManager;
+import static com.shsrobotics.recyclerush.Hardware.IDriveBase.*;
+import static com.shsrobotics.recyclerush.Hardware.*;
+import static com.shsrobotics.recyclerush.Hardware.IDashboard.*;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.hal.PDPJNI;
 
 /**
  * The robot software dashboard
  */
-public class RobotDashboard extends Subsystem implements Hardware.IDashboard {
+public class RobotDashboard extends Subsystem {
     
 	/**
 	 * Update the dashboard
 	 */
     public void update() {
     	// robot only
-    	dashboard.putNumber(Dashboard.PDP_CURR, PDP.getTotalCurrent());
-    	dashboard.putNumber(Dashboard.PDP_TEMP, PDP.getTemperature());
-    	dashboard.putNumber(Dashboard.PDP_POWER, PDP.getTotalPower());
-    	dashboard.putNumber(Dashboard.PDP_VOLT, PDP.getVoltage());
+    	table.putNumber(Dashboard.PDP_CURR, pdp.getTotalCurrent());
+    	table.putNumber(Dashboard.PDP_TEMP, toFarenheit(pdp.getTemperature()));
+    	
+    	table.putNumber(Dashboard.PDP_POWER, pdp.getTotalPower());
+    	table.putNumber(Dashboard.PDP_VOLT, pdp.getVoltage());
     	// specific motors
-    	dashboard.putNumber(Dashboard.ELEV_A_CURR, PDP.getCurrent(PDPPorts.ELEV_MOTOR_A));
-    	dashboard.putNumber(Dashboard.ELEV_B_CURR, PDP.getCurrent(PDPPorts.ELEV_MOTOR_B));
-    	dashboard.putNumber(Dashboard.GRIPPER_CURR, PDP.getCurrent(PDPPorts.GRIPPER_MOTOR));
+    	table.putNumber(Dashboard.ELEV_CURR, pdp.getCurrent(PDPPorts.ELEV_MOTOR_A));
+    	table.putNumber(Dashboard.GRIPPER_CURR, pdp.getCurrent(PDPPorts.GRIPPER_MOTOR));
     	// totes and stack management
-    	dashboard.putNumber(Dashboard.TOTE_COUNT, StackManager.totes);
+    	table.putNumber(Dashboard.TOTE_COUNT, StackManager.totes);
+    	// robot position
+    	table.putNumber(Dashboard.X_POSITION, driveBase.getXPosition());
+    	table.putNumber(Dashboard.Y_POSITION, driveBase.getYPosition());
+    	table.putNumber(Dashboard.HEADING, driveBase.getHeading());
     }
     
     /**
@@ -36,7 +46,7 @@ public class RobotDashboard extends Subsystem implements Hardware.IDashboard {
      * @return the command to run
      */
     public Autonomous2015 getAutonomous() {
-    	int choice = (int) dashboard.getNumber(Dashboard.AUTO_MODE);
+    	int choice = (int) table.getNumber(Dashboard.AUTO_MODE);
     	Autonomous2015 r;
     	
     	switch(choice) {
@@ -61,5 +71,28 @@ public class RobotDashboard extends Subsystem implements Hardware.IDashboard {
     }
 
     public void initDefaultCommand() { }
+    
+    /**
+     * Convert C to F
+     * @param celsius
+     * @return farenheit
+     */
+    public static double toFarenheit(double celsius) {
+    	return celsius*1.8 + 32;
+    }
+
+    /**
+     * Manage stick faults and other power issues
+     */
+	public void manageFaults() {
+		ByteBuffer status = ByteBuffer.allocateDirect(4);
+		status.order(ByteOrder.LITTLE_ENDIAN);
+		PDPJNI.clearPDPStickyFaults(status.asIntBuffer());
+		status.rewind();
+		byte[] res = new byte[4];
+		status.get(res);
+		if (res[0] + res[1] + res[2] + res[3] == 0) return;
+		System.out.println(res[0] + "," + res[1] + "," + res[2] + "," + res[3]);
+	}
 }
 

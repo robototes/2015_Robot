@@ -1,13 +1,13 @@
 package com.shsrobotics.recyclerush.commands;
 
-import com.shsrobotics.recyclerush.Hardware;
+import static com.shsrobotics.recyclerush.Hardware.*;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Cancels the auto-intake
  */
-public class CancelAutoIntake extends Command implements Hardware {
+public class CancelAutoIntake extends Command {
 
     public CancelAutoIntake() {
         requires(rollerIntake);

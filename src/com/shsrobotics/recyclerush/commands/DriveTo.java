@@ -1,13 +1,12 @@
 package com.shsrobotics.recyclerush.commands;
 
-import com.shsrobotics.recyclerush.Hardware;
-
+import static com.shsrobotics.recyclerush.Hardware.*;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Drives the robot to a specific location
  */
-public class DriveTo extends Command implements Hardware {
+public class DriveTo extends Command {
 
 	double x, y, z;
 	

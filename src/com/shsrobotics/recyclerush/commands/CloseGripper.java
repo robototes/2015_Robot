@@ -1,13 +1,12 @@
 package com.shsrobotics.recyclerush.commands;
 
-import com.shsrobotics.recyclerush.Hardware;
-
+import static com.shsrobotics.recyclerush.Hardware.*;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Closes Gripper
  */
-public class CloseGripper extends Command implements Hardware {
+public class CloseGripper extends Command {
 
     public CloseGripper() {
     	requires(gripper);
