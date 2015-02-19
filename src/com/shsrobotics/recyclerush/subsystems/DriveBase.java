@@ -23,10 +23,7 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
     
 	static final int clicksPerRevolution = 48;
 	static final double TOLERANCE = 4.0;
-	static final double P = 0.15; // TODO: REFLECT FOR ALL
-//	static final double P_fr = 0.05;
-//	static final double P_rl = 0.05;
-//	static final double P_rr = 0.05;
+	static final double P = 0.15; 
 	static final double I = 0.0;
 	static final double D = 0.0;
 	static final double F = 0;
@@ -51,35 +48,7 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	
 	private double x, y, h;
 	
-	public DriveBase() { // TODO: UNCOMMENT
-//		frontLeft.changeControlMode(ControlMode.Speed);
-//		frontRight.changeControlMode(ControlMode.Speed);
-//		rearLeft.changeControlMode(ControlMode.Speed);
-//		rearRight.changeControlMode(ControlMode.Speed);
-//		
-//		frontLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		frontRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		rearLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		rearRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		
-//		frontLeft.setPID(P, I, D);
-//			frontLeft.setF(F);
-//		frontRight.setPID(P, I, D);
-//			frontRight.setF(F);
-//		rearLeft.setPID(P, I, D);
-//			rearLeft.setF(F);
-//		rearRight.setPID(P, I, D);
-//			rearRight.setF(F);
-//		
-//		frontLeft.enableControl();
-//		frontRight.enableControl();
-//		rearLeft.enableControl();
-//		rearRight.enableControl();
-		
-//		fieldPID.setPIDX(P_X, I_X, D_X);
-//		fieldPID.setPIDY(P_Y, I_Y, D_Y);
-//		fieldPID.setPIDZ(P_H, I_H, D_H);
-
+	public DriveBase() { 		
 		alignToFieldPID.setPID(P_H, I_H, D_H);
 		alignToFieldPID.setAbsoluteTolerance(TOLERANCE);
 		alignToFieldPID.setOutputRange(-1.0, 1.0);
