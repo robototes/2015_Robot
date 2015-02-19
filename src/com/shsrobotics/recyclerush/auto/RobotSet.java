@@ -17,7 +17,7 @@ public class RobotSet extends Command implements Autonomous2015 {
 
 	@Override
 	protected void execute() {
-		driveBase.drive(0.0, Autonomous.drivingSpeed, 0.0);
+		driveBase.drive(0.0, Autonomous.drivingSpeed, Autonomous.curveCorrection);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ public class RollerIntake extends Subsystem {
 	
 	// roller speed for normal operation
 	static final double ROLLER_SPEED_IN = 1.0;
+	static final double ROLLER_SPEED_KEEP_IN = 0.35;
 	static final double ROLLER_SPEED_OUT = -0.75;
 	static final double ROLLER_SPEED_OUT_ONE_OBJ = -0.35;
 	// less than this ~= 0
@@ -30,6 +31,13 @@ public class RollerIntake extends Subsystem {
 	 */
 	public void in() {
 		setSpeed(ROLLER_SPEED_IN);
+	}
+	
+	/**
+	 * Keep objects in robot
+	 */
+	public void slowIn() {
+		setSpeed(ROLLER_SPEED_KEEP_IN);
 	}
 	
 	/**

@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class RCClaw extends Subsystem {
     
+	public static final double HALF_UP_TIME = 2.7;
+	
 	final double SPEED = 0.8;
 	
 	/**

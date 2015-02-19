@@ -2,11 +2,17 @@ package com.shsrobotics.recyclerush.subsystems;
 
 import com.shsrobotics.library.fieldpositioning.PID2DOutput;
 import com.shsrobotics.library.fieldpositioning.Point;
-import static com.shsrobotics.recyclerush.Hardware.IDriveBase.*;
-import com.shsrobotics.recyclerush.Maps;
 
+import static com.shsrobotics.recyclerush.Hardware.IDriveBase.*;
+
+import com.shsrobotics.recyclerush.Maps;
+import com.shsrobotics.recyclerush.Hardware;
+
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -16,6 +22,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class DriveBase extends Subsystem implements PID2DOutput, Maps {
     
 	static final int clicksPerRevolution = 48;
+	static final double TOLERANCE = 4.0;
 	static final double P = 0.15; // TODO: REFLECT FOR ALL
 //	static final double P_fr = 0.05;
 //	static final double P_rl = 0.05;
@@ -38,9 +45,9 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	static final double P_Y = 0.0;
 	static final double I_Y = 0.0;
 	static final double D_Y = 0.0;
-	static final double P_H = 0.0;
-	static final double I_H = 0.0;
-	static final double D_H = 0.0;
+	static final double P_H = 0.028;
+	static final double I_H = 0.0024;
+	static final double D_H = 0;
 	
 	private double x, y, h;
 	
@@ -73,7 +80,11 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 //		fieldPID.setPIDY(P_Y, I_Y, D_Y);
 //		fieldPID.setPIDZ(P_H, I_H, D_H);
 
-		robotDrive.setInvertedMotor(MotorType.kRearLeft, true);
+		alignToFieldPID.setPID(P_H, I_H, D_H);
+		alignToFieldPID.setAbsoluteTolerance(TOLERANCE);
+		alignToFieldPID.setOutputRange(-1.0, 1.0);
+		
+		robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
 		robotDrive.setInvertedMotor(MotorType.kRearRight, true);
 		
 		robotDrive.setExpiration(1.0);
@@ -86,7 +97,7 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	 * @param z rotation speed
 	 */
 	public void drive(double x, double y, double z) {
-		robotDrive.mecanumDrive_Cartesian(x*x*x, y*y*y, z*z*z, 0.0);
+		robotDrive.mecanumDrive_Cartesian(x*x*x, -y*y*y, z*z*z, 0.0);
 
 		this.x = x;
 		this.y = y;
@@ -97,7 +108,7 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	 * Update the odometer and location tracking
 	 */
 	public void updateOdometer() {
-		double[] v = odometer.get(); // TODO: finalize and uncommend
+		double[] v = odometer.get(); // TODO: finalize and uncomment
 //		double v_x = odometer.getXVelocity();
 //		double v_y = odometer.getYVelocity();
 //		double v_h = odometer.getAngularVelocity();
@@ -111,7 +122,7 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	 * Drive to a specific location and orientation
 	 */
 	public void driveTo(double x, double y, double h) {
-		fieldPID.setSetpointAndEnable(new Point(x, y, h));
+//		fieldPID.setSetpointAndEnable(new Point(x, y, h));
 	}
 	
 	/**
@@ -189,6 +200,5 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	}
 	
     public void initDefaultCommand() { }
-	
 }
 

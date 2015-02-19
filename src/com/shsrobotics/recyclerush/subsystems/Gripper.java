@@ -2,6 +2,7 @@ package com.shsrobotics.recyclerush.subsystems;
 
 import static com.shsrobotics.recyclerush.Hardware.IGripper.*;
 import static com.shsrobotics.recyclerush. Hardware.IDashboard.*;
+import static com.shsrobotics.recyclerush.Hardware.*;
 
 import com.shsrobotics.recyclerush.Maps.PDPPorts;
 
@@ -13,10 +14,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Gripper extends Subsystem {
     
 	// normal motor operation speed
-    static final double MOTOR_SPEED = 0.8;
+	static final double MOTOR_SPEED_CLOSE = 0.8;
+    static final double MOTOR_SPEED_OPEN = 1.0;
     // current threshold for motor stop
-    static final double CURRENT_THRESHOLD_IN = 36;
-    static final double CURRENT_THRESHOLD_OUT = 40;
+    static final double CURRENT_THRESHOLD_TOTE = 32;
+    static final double CURRENT_THRESHOLD_RC = 24;
     
     double lastCurrent = 0;
     
@@ -24,14 +26,14 @@ public class Gripper extends Subsystem {
      * Open the gripper
      */
     public void open() {
-    	gripperMotor.set(MOTOR_SPEED);
+    	gripperMotor.set(MOTOR_SPEED_OPEN);
     }
     
     /**
      * Close the gripper
      */
     public void close() {
-    	gripperMotor.set(-MOTOR_SPEED);
+    	gripperMotor.set(-MOTOR_SPEED_CLOSE);
     }
     
     /**
@@ -43,20 +45,18 @@ public class Gripper extends Subsystem {
     
     /**
      * Get state of gripper
-     * @param useCurrentThresholding
      * @return true if at inner limit
      */
     public boolean getInnerLimit() {
-    	return (innerLimit.get() || pdp.getCurrent(PDPPorts.GRIPPER_MOTOR) > CURRENT_THRESHOLD_IN);
+    	return (innerLimit.get() || pdp.getCurrent(PDPPorts.GRIPPER_MOTOR) > (rollerIntake.isRCIn() ? CURRENT_THRESHOLD_RC : CURRENT_THRESHOLD_TOTE));
     }
     
     /**
      * Get state of gripper
-     * @param useCurrentThresholding
      * @return true if at outer limit
      */
     public boolean getOuterLimit() {
-    	return (outerLimit.get() || pdp.getCurrent(PDPPorts.GRIPPER_MOTOR) > CURRENT_THRESHOLD_OUT);
+    	return outerLimit.get();
     }
     
     /**

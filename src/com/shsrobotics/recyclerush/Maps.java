@@ -11,28 +11,27 @@ public interface Maps extends GLOBAL {
 	
 	public static final LowPassFilterJoystick driverJoystick = new LowPassFilterJoystick(USB_0, 15, 15, 12);
 	public static final Joystick secondaryJoystick = new Joystick(USB_1);
-	public static final Joystick tertiaryJoystick = new Joystick(USB_2);
 	
-	public static final double END_MATCH_MOTION_TIME = 130; // bring systems inside the robot with X seconds remaining
+	public static final double END_MATCH_MOTION_TIME = 5; // bring systems inside the robot with X seconds remaining
    
 	public class Buttons {
 	   
 	   public static final JoystickButton
-		   	autoIntake = new JoystickButton(driverJoystick, Extreme3DController.trigger),
+		   	autoIntake = new JoystickButton(driverJoystick, 9),
+		   	intakeOne = new JoystickButton(driverJoystick, Extreme3DController.trigger),
+		   	liftForStack = new JoystickButton(driverJoystick, Extreme3DController.side),
 	  		release = new JoystickButton(driverJoystick, 5),
 	  		gripperOpen = new JoystickButton(driverJoystick, 11), 
 	  		gripperClose = new JoystickButton(driverJoystick, 12),
 			setElevator = new JoystickButton(secondaryJoystick, 4),
-	   		rcClawDrive = new JoystickButton(driverJoystick, 2),
+	   		rcClawDrive = new JoystickButton(driverJoystick, 8),
   			rollersIn = new JoystickButton(secondaryJoystick, 7),
   			rollersOut = new JoystickButton(secondaryJoystick, 8),
   			clawUp = new JoystickButton(secondaryJoystick, 5),
   			clawDown = new JoystickButton(secondaryJoystick, 6),
 	   		elevatorUp = new JoystickButton(driverJoystick, 6),
 	   		elevatorDown = new JoystickButton(driverJoystick, 4),
-	   		disableRollers = new JoystickButton(driverJoystick, 7),
-	   		disableElevator = new JoystickButton(driverJoystick, 8),
-	   		disableGripper = new JoystickButton(driverJoystick, 9),
+	   		alignToField = new JoystickButton(driverJoystick, 7),
 	   		disableEndMatchElevatorMotion = new JoystickButton(driverJoystick, 10);
 	   
 	   public static final int elevatorPosition = 0; // axis to get elevator position
@@ -56,9 +55,14 @@ public interface Maps extends GLOBAL {
 			ELEV_CURR = "elev-curr",
 			GRIPPER_CURR = "gripper-curr",
 			TOTE_COUNT = "toteCount",
+			HAS_RC = "hasRC",
 			X_POSITION = "x-position",
 			Y_POSITION = "y-position",
-			HEADING = "heading";
+			HEADING = "heading",
+			DISABLE_GRIPPER = "disable-gripper",
+			DISABLE_ROLLERS = "disable-rollers",
+			DISABLE_ELEVATOR = "disable-elevator",
+			ELEVATOR_POSITION = "elev-pos";
 	}
 	
 	public static final class Autonomous {
@@ -68,8 +72,16 @@ public interface Maps extends GLOBAL {
 			STACK_SET = 2,
 			CENTER_CONTAINERS = 3;
 		public static final double
-			drivingSpeed = 0.85,
-			robotSetDrivingTime = 3;
+			drivingSpeed = 0.75,
+			robotSetDrivingTime = 2.9,
+			toteSetDrivingTime = 2.2,
+			RCsetRevTime = 0.25,
+			RCsetForTime = 0.25,
+			RCsetTurnTime = 1.5,
+			clawDriveDelay = 1.3,
+			oneToteTime = 0.2,
+			curveCorrection = 0.28,
+			toteSetForwardWhileTurn = 0.6;
 	}
 	
 	public static final class Odometry {

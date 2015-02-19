@@ -11,6 +11,7 @@ public class OpenGripper extends Command {
 
     public OpenGripper() {
     	requires(gripper);
+    	setTimeout(5.0);
     }
 
     protected void initialize() {
@@ -20,7 +21,7 @@ public class OpenGripper extends Command {
     protected void execute() { }
 
     protected boolean isFinished() {
-        return gripper.getOuterLimit();
+        return gripper.getOuterLimit() || isTimedOut();
     }
 
     protected void end() {

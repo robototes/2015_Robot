@@ -11,16 +11,18 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SetElevator extends Command {
 
 	double level;
+	int count;
 	
 	static final double TIMEOUT_FACTOR = 1.5;
 	
     public SetElevator(double elevatorLevel) {
     	this.level = elevatorLevel;
     	requires(elevator);
-    	setTimeout(TIMEOUT_FACTOR * elevator.getExpectedTime(elevatorLevel)); 
+//    	setTimeout(TIMEOUT_FACTOR * elevator.getExpectedTime(elevatorLevel)); 
     }
 
     protected void initialize() {
+    	count = 0;
     	elevator.setManual(false);
     }
 
@@ -33,12 +35,16 @@ public class SetElevator extends Command {
     }
 
     protected boolean isFinished() {
-        return Math.abs(level - elevator.getPosition()) < Elevator.TOLERANCE;// || isTimedOut();
+        if (Math.abs(level - elevator.getPosition()) < Elevator.TOLERANCE) {
+        	count++;
+        }
+        return count > 0 || elevator.isManual();
     }
 
     protected void end() {
     	Elevator.LEVEL = level;
     	elevator.stop();
+    	elevator.setManual(true);
     }
 
     protected void interrupted() {

@@ -1,11 +1,8 @@
 package com.shsrobotics.recyclerush;
 
-import com.shsrobotics.library.fieldpositioning.PID2D;
 import com.shsrobotics.library.IntermediarySpeedController;
-import com.shsrobotics.library.MaxBotixSonar;
-import com.shsrobotics.recyclerush.odometry.EncoderOdometer;
+import com.shsrobotics.library.fieldpositioning.PID2D;
 import com.shsrobotics.recyclerush.odometry.MinOdometer;
-import com.shsrobotics.recyclerush.odometry.Odometer;
 import com.shsrobotics.recyclerush.odometry.OdometerLocator;
 import com.shsrobotics.recyclerush.subsystems.DriveBase;
 import com.shsrobotics.recyclerush.subsystems.Elevator;
@@ -13,6 +10,7 @@ import com.shsrobotics.recyclerush.subsystems.Gripper;
 import com.shsrobotics.recyclerush.subsystems.RCClaw;
 import com.shsrobotics.recyclerush.subsystems.RobotDashboard;
 import com.shsrobotics.recyclerush.subsystems.RollerIntake;
+import com.shsrobotics.recyclerush.subsystems.TurnPID;
 
 import edu.wpi.first.wpilibj.AnalogAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -23,10 +21,9 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-public class Hardware implements Maps { // TODO: FINALIZE PORTS
+public class Hardware implements Maps {
 	
 	public static void initialize() {
 		ElevatorHardware.init();
@@ -61,7 +58,8 @@ public class Hardware implements Maps { // TODO: FINALIZE PORTS
 			gyroscope = new Gyro(ANALOG_0); 
 			odometer = new MinOdometer();
 			robotPosition = new OdometerLocator(0, 0, 0);
-			fieldPID = new PID2D(driveBase, robotPosition);
+//			fieldPID = new PID2D(driveBase, robotPosition);
+			alignToFieldPID = new TurnPID();
 		}
 		public static CANTalon 
 			frontLeft,
@@ -80,6 +78,7 @@ public class Hardware implements Maps { // TODO: FINALIZE PORTS
 		public static MinOdometer odometer;
 		public static OdometerLocator robotPosition;
 		public static PID2D fieldPID;
+		public static TurnPID alignToFieldPID;
 	}
 	
 	public static class IRollerIntake {

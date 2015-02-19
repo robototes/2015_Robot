@@ -6,7 +6,13 @@ import java.util.LinkedList;
 import com.shsrobotics.library.FRCRobot;
 import com.shsrobotics.library.Subsystem;
 import com.shsrobotics.recyclerush.auto.Autonomous2015;
+import com.shsrobotics.recyclerush.auto.RCSet;
 import com.shsrobotics.recyclerush.auto.RobotSet;
+import com.shsrobotics.recyclerush.auto.ToteSet;
+import com.shsrobotics.recyclerush.commands.AssembleStack;
+import com.shsrobotics.recyclerush.commands.IntakeOne;
+import com.shsrobotics.recyclerush.commands.RollersIn;
+import com.shsrobotics.recyclerush.commands.TurnTo;
 import com.shsrobotics.recyclerush.commands.AutoIntake;
 import com.shsrobotics.recyclerush.commands.CancelAutoIntake;
 import com.shsrobotics.recyclerush.commands.CloseGripper;
@@ -20,6 +26,7 @@ import com.shsrobotics.recyclerush.stacks.ToteIn;
 import com.shsrobotics.recyclerush.stacks.ObjectOut;
 import com.shsrobotics.recyclerush.subsystems.Elevator;
 import com.shsrobotics.recyclerush.subsystems.RobotDashboard;
+import com.shsrobotics.recyclerush.subsystems.TurnPID;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -27,12 +34,14 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import static com.shsrobotics.recyclerush.Hardware.*;
+import static com.shsrobotics.recyclerush.Hardware.IDriveBase.gyroscope;
 
 public class Robot extends FRCRobot {
 
 	Autonomous2015 autonomousCommand;
 	
 	boolean hasStartedEndMatchRoutine = false;
+	Command activePIDCommand;
 	
     public void robotInit() {
     	/*
@@ -70,7 +79,7 @@ public class Robot extends FRCRobot {
     	 * AUTONOMOUS SELECTION
     	 */
 //    	autonomousCommand = dashboard.getAutonomous();
-    	autonomousCommand = new RobotSet();
+    	autonomousCommand = new RCSet();
     	autonomousCommand.start();
     	IDriveBase.robotPosition.x = autonomousCommand.getStartingX();
     	IDriveBase.robotPosition.y = autonomousCommand.getStartingY();
@@ -89,9 +98,14 @@ public class Robot extends FRCRobot {
     	 * CANCELLING AUTONOMOUS ROUTINE
     	 */
     	if (autonomousCommand != null) autonomousCommand.cancel();
+    	
+    	/*
+    	 * FIELD ALIGNMENT
+    	 */
+    	IDriveBase.alignToFieldPID.setForward(0.0);
     }
 
-    public void teleopPeriodic() { // TODO: UNCOMMENT
+    public void teleopPeriodic() {
         /*
          * COMMAND-BASED SCHEDULER
          */
@@ -101,12 +115,27 @@ public class Robot extends FRCRobot {
     	 * DRIVING
     	 */
 		driveBase.updateSmoothingAndScale(Buttons.rcClawDrive.held(), StackManager.getObjects());
-		driveBase.drive(driverJoystick.outputX(), driverJoystick.outputY(), driverJoystick.outputZ());
+		if (!IDriveBase.alignToFieldPID.isEnable()) {
+			driveBase.drive(driverJoystick.outputX(), driverJoystick.outputY(), driverJoystick.outputZ());
+		}
         driveBase.updateOdometer();
+        // align to field
+        if (Buttons.alignToField.pressed()) {
+        	activePIDCommand = new TurnTo( Math.round(gyroscope.getAngle() / 90) * 90 );
+        	activePIDCommand.start();
+        } else if (Buttons.alignToField.released()) {
+        	activePIDCommand.cancel();
+        }
     	
     	/*
     	 * AUTOMATIC STACK MANAGMENT AND INTAKE
     	 */
+        if (Buttons.intakeOne.pressed()) new IntakeOne().start();
+        if (Buttons.intakeOne.released()) new CancelAutoIntake().start();
+        
+        if (Buttons.liftForStack.pressed()) new AssembleStack().start();
+        if (Buttons.liftForStack.released()) new CancelAutoIntake().start();
+        
         if (Buttons.autoIntake.pressed()) new AutoIntake().start();	
         if (Buttons.autoIntake.released()) new CancelAutoIntake().start();
         if (Buttons.release.pressed()) new Release().start();
@@ -123,7 +152,7 @@ public class Robot extends FRCRobot {
         /*
          * GRIPPER
          */
-        if (!Buttons.disableGripper.held()) {
+        if (!dashboard.disableGripper()) {
         	if (Buttons.gripperOpen.pressed()) new OpenGripper().start();
         	if (Buttons.gripperClose.pressed()) new CloseGripper().start();
         }
@@ -131,7 +160,7 @@ public class Robot extends FRCRobot {
         /*
          * ELEVATOR
          */
-        if (!Buttons.disableElevator.held()) {
+        if (!dashboard.disableElevator()) {
 	        double elevatorLevel = 5 * (-secondaryJoystick.getRawAxis(Buttons.elevatorPosition) + 0.5) / 1.5;
 	        if (Buttons.setElevator.pressed()) {
 	        	new SetElevator(Math.floor(Math.abs(elevatorLevel))).start();
@@ -147,15 +176,16 @@ public class Robot extends FRCRobot {
 	        	elevator.stop();
 	        }
         }
-        
+        // reset when down
         if (elevator.isAtBottom()) {
         	elevator.reset();
         }
         
+        
         /*
          * ROLLERS
          */
-        if (!Buttons.disableRollers.held()) {
+        if (!dashboard.disableRollers()) {
 	        if (Buttons.rollersIn.held()) {
 	        	rollerIntake.setManual(true);
 	        	rollerIntake.in();
@@ -166,7 +196,7 @@ public class Robot extends FRCRobot {
 	        	rollerIntake.stop();
 	        }
         }
-        
+
         /*
          * RC CLAW
          */
@@ -183,14 +213,14 @@ public class Robot extends FRCRobot {
 		 */
 		dashboard.update();
 		
+		// TODO: uncomment at competition
 		/*
 		 * END-OF-MATCH MOTION
 		 */
-		if (DriverStation.getInstance().getMatchTime() > END_MATCH_MOTION_TIME && !hasStartedEndMatchRoutine) {
-			hasStartedEndMatchRoutine = true;
-			new EndMatch().start();
-			System.out.println("end match started");	// TODO remove line
-		}
+//		if (DriverStation.getInstance().getMatchTime() <= END_MATCH_MOTION_TIME && !hasStartedEndMatchRoutine) {
+//			hasStartedEndMatchRoutine = true;
+//			new EndMatch().start();
+//		}
 		
 		if (driverJoystick.getRawButton(3)) {
 			IDriveBase.odometer.reset();

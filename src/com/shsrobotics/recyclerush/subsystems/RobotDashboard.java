@@ -27,7 +27,6 @@ public class RobotDashboard extends Subsystem {
     	// robot only
     	table.putNumber(Dashboard.PDP_CURR, pdp.getTotalCurrent());
     	table.putNumber(Dashboard.PDP_TEMP, toFarenheit(pdp.getTemperature()));
-    	
     	table.putNumber(Dashboard.PDP_POWER, pdp.getTotalPower());
     	table.putNumber(Dashboard.PDP_VOLT, pdp.getVoltage());
     	// specific motors
@@ -35,6 +34,8 @@ public class RobotDashboard extends Subsystem {
     	table.putNumber(Dashboard.GRIPPER_CURR, pdp.getCurrent(PDPPorts.GRIPPER_MOTOR));
     	// totes and stack management
     	table.putNumber(Dashboard.TOTE_COUNT, StackManager.totes);
+    	table.putBoolean(Dashboard.HAS_RC, StackManager.hasRC);
+    	table.putNumber(Dashboard.ELEVATOR_POSITION, elevator.getPosition());
     	// robot position
     	table.putNumber(Dashboard.X_POSITION, driveBase.getXPosition());
     	table.putNumber(Dashboard.Y_POSITION, driveBase.getYPosition());
@@ -68,6 +69,18 @@ public class RobotDashboard extends Subsystem {
     	}
     	
     	return r;
+    }
+    
+    public boolean disableGripper() {
+    	return table.getBoolean(Dashboard.DISABLE_GRIPPER, false);
+    }
+    
+    public boolean disableRollers() {
+    	return table.getBoolean(Dashboard.DISABLE_ROLLERS, false);
+    }
+    
+    public boolean disableElevator() {
+    	return table.getBoolean(Dashboard.DISABLE_ELEVATOR, false);
     }
 
     public void initDefaultCommand() { }

@@ -49,4 +49,12 @@ public class AutoIntake extends CommandGroup {
 		}
     }
     
+    public void end() {
+    	new SetElevator(0.16).start();
+    }
+    
+    public void interrupted() {
+    	end();
+    }
+    
 }
