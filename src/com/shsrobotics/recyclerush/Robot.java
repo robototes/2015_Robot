@@ -213,14 +213,13 @@ public class Robot extends FRCRobot {
 		 */
 		dashboard.update();
 		
-		// TODO: uncomment at competition
 		/*
 		 * END-OF-MATCH MOTION
 		 */
-//		if (DriverStation.getInstance().getMatchTime() <= END_MATCH_MOTION_TIME && !hasStartedEndMatchRoutine) {
-//			hasStartedEndMatchRoutine = true;
-//			new EndMatch().start();
-//		}
+		if (DriverStation.getInstance().getMatchTime() <= END_MATCH_MOTION_TIME && !hasStartedEndMatchRoutine) {
+			hasStartedEndMatchRoutine = true;
+			new EndMatch().start();
+		}
 		
 		if (driverJoystick.getRawButton(3)) {
 			IDriveBase.odometer.reset();
