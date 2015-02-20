@@ -1,7 +1,7 @@
 body {
 	background-color: #fcfcfc;
 	font-family: "Lato";
-	font-size: 48pt;
+	font-size: 36pt;
 	margin-left: 32px;
 	-webkit-user-select: none;
 }
@@ -10,7 +10,7 @@ body {
 }
 
 button.title {
-	font-size: 64pt;
+	font-size: 60pt;
 	width: 100%;
 	text-align: center;
 	outline: none;
@@ -19,6 +19,13 @@ button.title {
 	background-color: transparent;
 	font-weight: bold;
 }
+
+h1 {
+	font-size: 60pt;
+	width: 100%;
+	text-align: center;
+}
+
 
 input[type=checkbox] {
 	width: 56px;
@@ -34,10 +41,10 @@ input[type=checkbox] {
 a {
 	color: black;
 	cursor: pointer;
-	background-color: rgba(0, 0, 0, 0.1);
-	padding: 24px;
+	background-color: rgba(0, 0, 0, 0.12);
+	padding: 20px;
 	text-decoration: none;	
-	margin-left: 64px;
+	margin-left: 56px;
 	margin-top: 48px;
 	-webkit-touch-callout: none;
 	display: inline-block; 
