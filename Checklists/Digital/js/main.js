@@ -1,9 +1,26 @@
+COMPLETED = false;
+NAME = "";
+
 document.onreadystatechange = function() {
 	if (document.readyState !== "complete") return;
 	
-	if (document.body.className === "red") return; // return if we're in launcher.html
+	if (localStorage.log) {
+		LOG = JSON.parse(localStorage.log);
+	} else {
+		LOG = { }
+		localStorage.log = JSON.stringify(LOG);
+	}
+	
+	var modifiedPathName = location.pathname.toLowerCase().replace("/c:/users/", "");
+	var allowedUserNames = ["s-mccartanc"];
+	if (localStorage.verify_key === "ROBOTOTES_2412" && allowedUserNames.indexOf(modifiedPathName.slice(0, modifiedPathName.indexOf("/"))) > -1 && document.body.className === "red") {
+		$("#watermark").remove();
+	}
+	
+	if (document.body.className === "red") return; // if launcher.html
 	
 	var list = $("CHECKLIST").innerHTML.split("\n");
+	NAME = $("CHECKLIST").getAttribute("name");
 	
 	$("CHECKLIST").remove();
 	
@@ -11,6 +28,7 @@ document.onreadystatechange = function() {
 	$("title").innerHTML = title;
 	var h = document.createElement("h1");
 	h.innerHTML = title.toUpperCase();
+	h.ondblclick = checkIfUsed;
 	
 	var ul = document.createElement("div");
 	ul.id = "container";
@@ -49,14 +67,42 @@ document.onreadystatechange = function() {
 }
 
 function update() {
-	document.body.style.backgroundColor = "#fcfcfc";
+	$("html").style.backgroundColor = "#fcfcfc";
 	
 	var list = $$("input");
 	for (var i = 0; i < list.length; i++) {
 		if (!list[i].checked) return;
 	}
 	
-	document.body.style.backgroundColor = "#4e5";
+	if (!COMPLETED) {
+		COMPLETED = true;
+		if (!LOG[NAME]) {
+			LOG[NAME] = [];
+		}
+		LOG[NAME].push(new Date().toString());
+		
+		localStorage.log = JSON.stringify(LOG);
+	}
+	
+	$("html").style.backgroundColor = "#4e5";
+}
+
+function checkIfUsed() {
+	var record = "NEVER";
+	if (LOG[NAME]) {
+		var record = LOG[NAME].pop();
+		LOG[NAME].push(record);
+	}
+	
+	$("#container").innerHTML = "THIS CHECKLIST LAST COMPLETED " + record + ".";
+}
+
+function clearLog() {
+	localStorage.log="{}";
+}
+
+function getLog() {
+	return LOG;
 }
 
 window.$ = function(s) { return document.querySelector(s); };
