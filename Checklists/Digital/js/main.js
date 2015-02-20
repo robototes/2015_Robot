@@ -1,6 +1,8 @@
 document.onreadystatechange = function() {
 	if (document.readyState !== "complete") return;
 	
+	if (document.body.className === "red") return; // return if we're in launcher.html
+	
 	var list = $("CHECKLIST").innerHTML.split("\n");
 	
 	$("CHECKLIST").remove();

@@ -9,10 +9,15 @@ body {
 	background-color: #e42;
 }
 
-h1 {
+button.title {
 	font-size: 64pt;
 	width: 100%;
 	text-align: center;
+	outline: none;
+	border: none;
+	font-family: "Lato";
+	background-color: transparent;
+	font-weight: bold;
 }
 
 input[type=checkbox] {
