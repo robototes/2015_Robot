@@ -84,6 +84,10 @@ public class RobotDashboard extends Subsystem {
     public boolean disableElevator() {
     	return table.getBoolean(Dashboard.DISABLE_ELEVATOR, false);
     }
+    
+    public boolean disableClaw() {
+    	return table.getBoolean(Dashboard.DISABLE_CLAW, false);
+    }
 
     public void initDefaultCommand() { }
     
