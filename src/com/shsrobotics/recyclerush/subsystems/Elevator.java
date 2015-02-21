@@ -4,6 +4,7 @@ import com.shsrobotics.recyclerush.stacks.StackManager;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import static com.shsrobotics.recyclerush.Hardware.ElevatorHardware.*;
+import static com.shsrobotics.recyclerush.Hardware.*;
 
 /**
  * The elevator
@@ -114,6 +115,7 @@ public class Elevator extends Subsystem {
     }
     
     private void set(double output) {
+    	if (dashboard.disableElevator()) return;
         elevatorMotorA.set(-output);
         elevatorMotorB.set(-output);
     }
