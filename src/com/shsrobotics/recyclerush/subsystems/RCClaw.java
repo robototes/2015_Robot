@@ -17,6 +17,7 @@ public class RCClaw extends Subsystem {
 	 * Move the claw up
 	 */
 	public void up() {
+		if (dashboard.disableClaw()) return;
 		if (!isUp()) { 
 			clawMotor.set(SPEED);
 		} else {
@@ -28,6 +29,7 @@ public class RCClaw extends Subsystem {
 	 * Move the claw down
 	 */
 	public void down() {
+		if (dashboard.disableClaw()) return;
 		if (!isDown()) { 
 			clawMotor.set(-SPEED);
 		} else {
