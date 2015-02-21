@@ -13,6 +13,7 @@ public interface Maps extends GLOBAL {
 	public static final Joystick secondaryJoystick = new Joystick(USB_1);
 	
 	public static final double END_MATCH_MOTION_TIME = 5; // bring systems inside the robot with X seconds remaining
+	public static final double SOFTWARE_VERSION = 1.0;
    
 	public class Buttons {
 	   
@@ -62,7 +63,8 @@ public interface Maps extends GLOBAL {
 			DISABLE_GRIPPER = "disable-gripper",
 			DISABLE_ROLLERS = "disable-rollers",
 			DISABLE_ELEVATOR = "disable-elevator",
-			ELEVATOR_POSITION = "elev-pos";
+			ELEVATOR_POSITION = "elev-pos",
+			SOFTWARE_VERSION = "version";
 	}
 	
 	public static final class Autonomous {
