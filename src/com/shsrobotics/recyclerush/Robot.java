@@ -152,29 +152,25 @@ public class Robot extends FRCRobot {
         /*
          * GRIPPER
          */
-        if (!dashboard.disableGripper()) {
-        	if (Buttons.gripperOpen.pressed()) new OpenGripper().start();
-        	if (Buttons.gripperClose.pressed()) new CloseGripper().start();
-        }
+	if (Buttons.gripperOpen.pressed()) new OpenGripper().start();
+	if (Buttons.gripperClose.pressed()) new CloseGripper().start();
         
         /*
          * ELEVATOR
          */
-        if (!dashboard.disableElevator()) {
-	        double elevatorLevel = 5 * (-secondaryJoystick.getRawAxis(Buttons.elevatorPosition) + 0.5) / 1.5;
-	        if (Buttons.setElevator.pressed()) {
-	        	new SetElevator(Math.floor(Math.abs(elevatorLevel))).start();
-	        } 
-	        
-	        if (Buttons.elevatorUp.held()) {
-	        	elevator.setManual(true);
-	        	elevator.up();
-	        } else if (Buttons.elevatorDown.held()) {
-	        	elevator.setManual(true);
-	        	elevator.down();
-	        } else if (elevator.isManual()) {
-	        	elevator.stop();
-	        }
+      	double elevatorLevel = 5 * (-secondaryJoystick.getRawAxis(Buttons.elevatorPosition) + 0.5) / 1.5;
+        if (Buttons.setElevator.pressed()) {
+        	new SetElevator(Math.floor(Math.abs(elevatorLevel))).start();
+        } 
+        
+        if (Buttons.elevatorUp.held()) {
+        	elevator.setManual(true);
+        	elevator.up();
+        } else if (Buttons.elevatorDown.held()) {
+        	elevator.setManual(true);
+        	elevator.down();
+        } else if (elevator.isManual()) {
+        	elevator.stop();
         }
         // reset when down
         if (elevator.isAtBottom()) {
@@ -185,16 +181,14 @@ public class Robot extends FRCRobot {
         /*
          * ROLLERS
          */
-        if (!dashboard.disableRollers()) {
-	        if (Buttons.rollersIn.held()) {
-	        	rollerIntake.setManual(true);
-	        	rollerIntake.in();
-	        } else if (Buttons.rollersOut.held()) {
-	        	rollerIntake.setManual(true);
-	        	rollerIntake.out();
-	        } else if (rollerIntake.isManual()){
-	        	rollerIntake.stop();
-	        }
+        if (Buttons.rollersIn.held()) {
+        	rollerIntake.setManual(true);
+        	rollerIntake.in();
+        } else if (Buttons.rollersOut.held()) {
+        	rollerIntake.setManual(true);
+        	rollerIntake.out();
+        } else if (rollerIntake.isManual()){
+        	rollerIntake.stop();
         }
 
         /*
