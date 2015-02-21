@@ -94,6 +94,7 @@ public class RollerIntake extends Subsystem {
 	 * @param speed
 	 */
 	private void setSpeed(double speed) {
+		if (dashboard.disableRollers()) return;
 		leftRoller.set(-speed);
 		rightRoller.set(speed);
 	}
