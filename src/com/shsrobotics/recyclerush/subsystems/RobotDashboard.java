@@ -40,6 +40,8 @@ public class RobotDashboard extends Subsystem {
     	table.putNumber(Dashboard.X_POSITION, driveBase.getXPosition());
     	table.putNumber(Dashboard.Y_POSITION, driveBase.getYPosition());
     	table.putNumber(Dashboard.HEADING, driveBase.getHeading());
+    	// global
+    	table.putNumber(Dashboard.SOFTWARE_VERSION, SOFTWARE_VERSION);
     }
     
     /**
