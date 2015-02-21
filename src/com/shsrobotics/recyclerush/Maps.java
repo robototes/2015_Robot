@@ -63,6 +63,7 @@ public interface Maps extends GLOBAL {
 			DISABLE_GRIPPER = "disable-gripper",
 			DISABLE_ROLLERS = "disable-rollers",
 			DISABLE_ELEVATOR = "disable-elevator",
+			DISABLE_CLAW = "disable-claw",
 			ELEVATOR_POSITION = "elev-pos",
 			SOFTWARE_VERSION = "version";
 	}

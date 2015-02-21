@@ -1,7 +1,7 @@
 package com.shsrobotics.recyclerush.subsystems;
 
 import static com.shsrobotics.recyclerush.Hardware.IGripper.*;
-import static com.shsrobotics.recyclerush. Hardware.IDashboard.*;
+import static com.shsrobotics.recyclerush.Hardware.IDashboard.*;
 import static com.shsrobotics.recyclerush.Hardware.*;
 
 import com.shsrobotics.recyclerush.Maps.PDPPorts;
@@ -26,6 +26,7 @@ public class Gripper extends Subsystem {
      * Open the gripper
      */
     public void open() {
+    	if (dashboard.disableGripper()) return;
     	gripperMotor.set(MOTOR_SPEED_OPEN);
     }
     
@@ -33,6 +34,7 @@ public class Gripper extends Subsystem {
      * Close the gripper
      */
     public void close() {
+    	if (dashboard.disableGripper()) return;
     	gripperMotor.set(-MOTOR_SPEED_CLOSE);
     }
     
