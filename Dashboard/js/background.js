@@ -17,7 +17,8 @@ chrome.app.runtime.onLaunched.addListener(function () {
 	    },
 	    "frame": {
 		"color": "#2f2f2f"
-	    }
+	    },
+	    "resizable": false
 	});
     });
 

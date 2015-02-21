@@ -17,6 +17,7 @@ Dashboard = {
     DISABLE_GRIPPER: "disable-gripper",
     DISABLE_ROLLERS: "disable-rollers",
     DISABLE_ELEVATOR: "disable-elevator",
+    DISABLE_CLAW: "disable-claw",
     ELEVATOR_POSITION: "elev-pos",
     SOFTWARE_VERSION: "version"
 };
@@ -33,8 +34,7 @@ Systems = {
 	current: 0,
 	voltage: 0,
 	power: 0,
-	temp: 0,
-	disabled: false
+	temp: 0
     },
     gripper: {
 	current: 0,
@@ -63,8 +63,11 @@ Stack = {
 REQ_ANIM_FRAME_ID = -1;
 GET_VALUES_ID = -1;
 BUILD_NUMBER = ~~(Math.random() * 1000);
+CONNECTED = false;
+UPDATE_SYSTEM_DISABLE = false;
+UPDATE_AUTONOMOUS = false;
 
-document.addEventListener("readystatechange", function() {
+document.addEventListener("readystatechange", function () {
     if (document.readyState !== "complete")
 	return;
 
@@ -72,9 +75,13 @@ document.addEventListener("readystatechange", function() {
 
     // try to connect until connected
     var ct = 0;
-    var id = setInterval(function() {
+    var id = setInterval(function () {
 	if (N.isConnected() || ++ct > 8) {
 	    clearInterval(id);
+	    if (N.isConnected())
+		CONNECTED = true;
+	    init();
+	    REQ_ANIM_FRAME_ID = requestAnimationFrame(update);
 	    GET_VALUES_ID = setInterval(get, 100);
 	} else {
 	    N.connect();
@@ -87,11 +94,17 @@ document.addEventListener("readystatechange", function() {
 	list[i].querySelector("input").onclick = function (e) {
 	    e.stopPropagation();
 	};
+	list[i].querySelector("input").onchange = function () {
+	    UPDATE_AUTONOMOUS = true;
+	};
 	list[i].onclick = function () {
-	    this.querySelector("input").checked = true;
+	    var el = this.querySelector("input");
+	    if (!el.checked)
+		UPDATE_AUTONOMOUS = true;
+	    el.checked = true;
 	};
     }
-    
+
     list = $$(".statusLight");
     for (var i = 0; i < list.length; i++) {
 	list[i].onclick = function () {
@@ -105,9 +118,29 @@ document.addEventListener("readystatechange", function() {
 		case "status_ELEVATOR":
 		    Systems.elevator.disabled = !Systems.elevator.disabled;
 		    break;
+		case "status_CLAW":
+		    Systems.claw.disabled = !Systems.claw.disabled;
+		    break;
 	    }
-	}
+	    UPDATE_SYSTEM_DISABLE = true;
+	};
     }
+
+    $("#connect").onclick = function () {
+	N.connect();
+	setTimeout(function () {
+	    if (N.isConnected()) {
+		CONNECTED = true;
+		init();
+	    }
+	}, 750);
+    };
+    $("#about").onclick = function () {
+	$("#info").style.display = "block";
+    };
+    $("#info").onclick = function () {
+	$("#info").style.display = "none";
+    };
 });
 
 window.$ = function (s) {

@@ -2,24 +2,33 @@
  * Get and set numbers from NetworkTable
  */
 function get() {
+    if (!CONNECTED) return;
+    
     /*
      * AUTONOMOUS MODE
      */
-    var autoMode = Autonomous.ROBOT_SET;
-    if ($("#ROBOT_SET").checked)
-	autoMode = Autonomous.ROBOT_SET;
-    if ($("#TOTE_SET").checked)
-	autoMode = Autonomous.TOTE_SET;
-    if ($("#CENTER_RC_SET").checked)
-	autoMode = Autonomous.CENTER_RC_SET;
-    N.set(Dashboard.AUTO_MODE, autoMode);
+    if (UPDATE_AUTONOMOUS) {
+	var autoMode = Autonomous.ROBOT_SET;
+	if ($("#ROBOT_SET").checked)
+	    autoMode = Autonomous.ROBOT_SET;
+	if ($("#TOTE_SET").checked)
+	    autoMode = Autonomous.TOTE_SET;
+	if ($("#CENTER_RC_SET").checked)
+	    autoMode = Autonomous.CENTER_RC_SET;
+	N.set(Dashboard.AUTO_MODE, autoMode);
+	UPDATE_AUTONOMOUS = false;
+    }
 
     /*
      * SYSTEM STATUS
      */
-    N.set(Dashboard.DISABLE_ELEVATOR, Systems.elevator.disabled);
-    N.set(Dashboard.DISABLE_GRIPPER, Systems.gripper.disabled);
-    N.set(Dashboard.DISABLE_ROLLERS, Systems.rollerIntake.disabled);
+    if (UPDATE_SYSTEM_DISABLE) {
+	N.set(Dashboard.DISABLE_ELEVATOR, Systems.elevator.disabled);
+	N.set(Dashboard.DISABLE_GRIPPER, Systems.gripper.disabled);
+	N.set(Dashboard.DISABLE_ROLLERS, Systems.rollerIntake.disabled);
+	N.set(Dashboard.DISABLE_CLAW, Systems.claw.disabled);
+	UPDATE_SYSTEM_DISABLE = false;
+    }
 
     Systems.driveBase.voltage = N.get(Dashboard.PDP_VOLT, 0.0);
     Systems.driveBase.current = N.get(Dashboard.PDP_CURR, 0.0);
@@ -81,14 +90,18 @@ function update() {
     $("#status_GRIPPER").innerHTML = Systems.gripper.disabled ? "&times;" : "";
     $("#status_ROLLERS").innerHTML = Systems.rollerIntake.disabled ? "&times;" : "";
 
-    $("#voltage").style.width = (Systems.driveBase.voltage / MAX_VOLTAGE) * 80 + 20 + "%";
+    $("#voltage").style.width = (Systems.driveBase.voltage / MAX_VOLTAGE) * 75 + 25 + "%";
     $("#voltage").innerHTML = "Voltage &nbsp;&nbsp;&nbsp;&nbsp;" + Systems.driveBase.voltage.toFixed(1) + " V";
-    $("#current").style.width = (Systems.driveBase.voltage / MAX_CURRENT) * 80 + 20 + "%";
+    $("#voltage").style.backgroundColor = Systems.driveBase.voltage < MIN_VOLTAGE ? "#d74" : "#ccc";
+    $("#current").style.width = (Systems.driveBase.current / MAX_CURRENT) * 65 + 25 + "%";
     $("#current").innerHTML = "Current &nbsp;&nbsp;&nbsp;&nbsp;" + Systems.driveBase.current.toFixed(0) + " A";
-    $("#power").style.width = (Systems.driveBase.power / MAX_POWER) * 80 + 20 + "%";
+    $("#current").style.backgroundColor = Systems.driveBase.current > MAX_CURRENT ? "#d74" : "#ccc";
+    $("#power").style.width = (Systems.driveBase.power / MAX_POWER) * 65 + 25 + "%";
     $("#power").innerHTML = "Power &nbsp;&nbsp;&nbsp;&nbsp;" + Systems.driveBase.power.toFixed(0) + " W";
-    $("#temp").style.width = (Systems.driveBase.temp / MAX_TEMP) * 80 + 20 + "%";
+    $("#power").style.backgroundColor = Systems.driveBase.power > MAX_POWER ? "#d74" : "#ccc";
+    $("#temp").style.width = (Systems.driveBase.temp / MAX_TEMP) * 65 + 25 + "%";
     $("#temp").innerHTML = "Temperature &nbsp;&nbsp;&nbsp;&nbsp;" + Systems.driveBase.temp.toFixed(1) + " &deg;F";
+    $("#temp").style.backgroundColor = Systems.driveBase.temp > MAX_TEMP ? "#d74" : "#ccc";
 
     /*
      * STACK
@@ -118,8 +131,37 @@ function update() {
     $("#gripper").style.bottom = Systems.elevator.position * 75 + 56 + "px";
     $(".stack").style.bottom = Systems.elevator.position * 75 + 20 + "px";
     
-    $("#build").innerHTML = "Running Y-OS version + " + N.get(Dashboard.SOFTWARE_VERSION, 1).toFixed(1) + "." + BUILD_NUMBER;
+    /*
+     * ROBOT WARNING SYSTEM
+    */
+    if (!CONNECTED) return;
+    
     
     // call again
     REQ_ANIM_FRAME_ID = requestAnimationFrame(update);
+}
+
+/**
+ * one-time operations
+ */ 
+function init() {
+    $("#build").innerHTML = "Running Y-OS version " + N.get(Dashboard.SOFTWARE_VERSION, 1).toFixed(1) + "." + BUILD_NUMBER;
+}
+
+/**
+ * Testing
+ */
+function test() {
+    N.set(Dashboard.PDP_CURR, 80);
+    N.set(Dashboard.PDP_POWER, 960);
+    N.set(Dashboard.PDP_TEMP, 78.7);
+    N.set(Dashboard.PDP_VOLT, 12.7);
+    N.set(Dashboard.ELEVATOR_POSITION, 1.5);
+    N.set(Dashboard.ELEV_CURR, 16);
+    N.set(Dashboard.GRIPPER_CURR, 24);
+    N.set(Dashboard.HAS_RC, false);
+    N.set(Dashboard.TOTE_COUNT, 3);
+    N.set(Dashboard.SOFTWARE_VERSION, 2.5);
+    UPDATE_AUTONOMOUS = true;
+    UPDATE_SYSTEM_DISABLE = true;
 }
