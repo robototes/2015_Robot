@@ -1,3 +1,141 @@
 body {
-	
+    background-color: #2f2f2f;
+    margin: 0 4px 8px 4px;
+    padding: 0;
+    color: #eee;
+    font-family: "Lato";
+    font-size: 16pt;
+}
+
+section.section {
+    display: block;
+    background-color: #575757;
+    border-radius: 3px;
+    margin: 4px;
+    padding: 12px;
+    box-sizing: border-box;
+    position: absolute;
+}
+
+section#status {
+    width: calc(60% - 16px);
+    height: calc(100% - 16px);
+    top: 0;
+    left: 4px;
+}
+section#autonomous {
+    width: calc(40% - 16px);
+    height: calc(30% - 16px);
+    right: 4px;
+    top: 0;
+}
+section#branding {
+    width: calc(40% - 16px);
+    height: calc(70% - 16px);
+    right: 4px;
+    bottom: 8px;
+}
+
+div.statusLight {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: #222;
+    position: absolute;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 48px;
+    z-index: 50;
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.32);
+    border: 1px solid #454;
+}
+
+h1 {
+    font-variant: small-caps;
+    font-weight: normal;
+    margin: 0 0 8px;
+    border-bottom: 1px solid#eee;
+}
+
+form#autonomousSelection input {
+    margin: 16px;
+    height: 1.2em;
+    width: 1.2em;
+}
+
+img#sideView {
+    width: 600px;
+    height: 432px;
+    opacity: 0.9;
+    left: calc(50% - 300px);
+    display: block;
+    position: absolute;
+    bottom: 4px;
+    z-index: 10;
+}
+img#gripper {
+   position: absolute;
+    left: 50%;
+    width: 224px;
+    bottom: 72px;
+    z-index: 20;
+}
+.stack {
+    position: absolute;
+    left: calc(50% + 48px);
+    bottom: 20px;
+    z-index: 5;
+}
+img.obj {
+    width: 180px;
+    display: block;
+}
+
+div#status_BASE {
+    bottom: 8px;
+    left: calc(50% - 56px);
+}
+div#status_CLAW {
+    bottom: 256px;
+    left: calc(50% - 332px);
+}
+div#status_ELEVATOR {
+    bottom: 144px;
+    left: calc(50% - 36px);
+}
+div#status_GRIPPER {
+    bottom: 188px;
+    left: calc(50% + 8px);
+}
+div#status_ROLLERS {
+    bottom: 64px;
+    left: calc(50% + 312px);
+}
+
+.meter {
+    background-color: #ccc;
+    border-radius: 2px;
+    padding: 8px;
+    color: #222;
+    margin-bottom: 8px;
+    box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.2);
+}
+
+section#branding > div {
+    text-align: center;
+}
+
+#robotName {
+    font-size: 64pt;
+    margin-top: 16px;
+    text-shadow: 0 0 16px #444;
+}
+#teamName {
+    color: #700;
+    font-size: 56pt;
+}
+#teamNumber {
+    font-size: 144pt;
+    color: #aaa;
+    text-shadow: 0 0 24px #2f2f2f;
 }

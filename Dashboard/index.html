@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/networktables.js"></script>	
+    <script type="text/javascript" src="js/update.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 	
-	<link type="text/css" rel="stylesheet" href="css/main.css">
+    <link type="text/css" rel="stylesheet" href="css/main.css">
+    <link type="text/css" rel="stylesheet" href="css/fonts.css">
 </head>
 <body>
-	
+    <!-- SYSTEM STATUS -->
+    <section class="section" id="status">
+        <h1>System Status</h1>
+        <img src="assets/sideView.png" id="sideView">
+        <img src="assets/gripper.png" id="gripper">
+        <div class="stack"></div>
+        
+        <div class="statusLight" id="status_BASE"></div>
+        <div class="statusLight" id="status_ROLLERS"></div>
+        <div class="statusLight" id="status_GRIPPER"></div>
+        <div class="statusLight" id="status_ELEVATOR"></div>
+        <div class="statusLight" id="status_CLAW"></div>
+        
+        <div class="meter" id="voltage">Voltage</div>
+        <div class="meter" id="current">Current</div>
+        <div class="meter" id="power">Power</div>
+        <div class="meter" id="temp">Temperature</div>
+    </section>
+    
+    <!-- AUTONOMOUS SELECTION -->
+    <section class="section" id="autonomous">
+        <h1>Autonomous Selection</h1>
+        
+        <form id="autonomousSelection">
+            <div>
+                <input type="radio" name="autonomousSelection" id="ROBOT_SET" checked /> 
+                Robot Set
+            </div>
+            <div>
+                <input type="radio" name="autonomousSelection" id="TOTE_SET" /> 
+                Robot and Tote Sets
+            </div>
+            <div>
+                <input type="radio" name="autonomousSelection" id="CENTER_RC_SET" /> 
+                RC Set
+            </div>
+        </form>
+    </section>
+    
+    <!-- BRANDING -->
+    <section class="section" id="branding">
+        <div id="robotName">YPOTRYLLA</div>
+        <div id="teamName">ROBOTOTES</div>
+        <div id="teamNumber">2412</div>
+        <div id="build"></div>
+    </section>
 </body>
 </html>
