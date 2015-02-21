@@ -1,8 +1,10 @@
 body {
-	background-color: #fcfcfc;
+	background-color: transparent;
 	font-family: "Lato";
 	font-size: 36pt;
-	margin-left: 32px;
+	margin: 16px;
+	min-height: 100vh;
+	position: relative;
 	-webkit-user-select: none;
 }
 .red {
@@ -41,19 +43,32 @@ input[type=checkbox] {
 a {
 	color: black;
 	cursor: pointer;
-	background-color: rgba(0, 0, 0, 0.12);
-	padding: 20px;
+	background-color: rgba(0, 0, 0, 0.1);
+	padding: 24px;
 	text-decoration: none;	
-	margin-left: 56px;
-	margin-top: 48px;
+	margin-left: 72px;
+	margin-top: 64px;
 	-webkit-touch-callout: none;
 	display: inline-block; 
+	z-index: 100;
 }
 
+#watermark {
+	position: absolute;
+	top: 20%;
+	left: 0;
+	font-size: 360pt;
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+	color: rgba(255, 255, 255, 0.2);
+	transform: rotate(-20deg);
+}
 span.bold {
 	display: inline-block;
 	float: right;
 	margin-top: 28px;
+	margin-right: 132px;
 	font-weight: bold;
 }
 
@@ -62,4 +77,8 @@ span.bold {
 	bottom: 0;
 	right: 0;
 	margin: 0;
+}
+
+::-webkit-scrollbar {
+	display: none;
 }
