@@ -78,8 +78,7 @@ public class Robot extends FRCRobot {
     	/*
     	 * AUTONOMOUS SELECTION
     	 */
-//    	autonomousCommand = dashboard.getAutonomous();
-    	autonomousCommand = new RCSet();
+    	autonomousCommand = dashboard.getAutonomous();
     	autonomousCommand.start();
     	IDriveBase.robotPosition.x = autonomousCommand.getStartingX();
     	IDriveBase.robotPosition.y = autonomousCommand.getStartingY();
