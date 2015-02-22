@@ -3,7 +3,6 @@ body {
 	font-family: "Lato";
 	font-size: 36pt;
 	margin: 16px;
-	min-height: 100vh;
 	position: relative;
 	-webkit-user-select: none;
 }
