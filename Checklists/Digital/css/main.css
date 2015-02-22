@@ -10,6 +10,10 @@ body {
 	background-color: #e42;
 }
 
+html {
+	background-color: #fcfcfc;
+}
+
 button.title {
 	font-size: 60pt;
 	width: 100%;
