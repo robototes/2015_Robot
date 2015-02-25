@@ -23,10 +23,7 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
     
 	static final int clicksPerRevolution = 48;
 	static final double TOLERANCE = 4.0;
-	static final double P = 0.15; // TODO: REFLECT FOR ALL
-//	static final double P_fr = 0.05;
-//	static final double P_rl = 0.05;
-//	static final double P_rr = 0.05;
+	static final double P = 0.15; 
 	static final double I = 0.0;
 	static final double D = 0.0;
 	static final double F = 0;
@@ -51,35 +48,7 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	
 	private double x, y, h;
 	
-	public DriveBase() { // TODO: UNCOMMENT
-//		frontLeft.changeControlMode(ControlMode.Speed);
-//		frontRight.changeControlMode(ControlMode.Speed);
-//		rearLeft.changeControlMode(ControlMode.Speed);
-//		rearRight.changeControlMode(ControlMode.Speed);
-//		
-//		frontLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		frontRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		rearLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		rearRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		
-//		frontLeft.setPID(P, I, D);
-//			frontLeft.setF(F);
-//		frontRight.setPID(P, I, D);
-//			frontRight.setF(F);
-//		rearLeft.setPID(P, I, D);
-//			rearLeft.setF(F);
-//		rearRight.setPID(P, I, D);
-//			rearRight.setF(F);
-//		
-//		frontLeft.enableControl();
-//		frontRight.enableControl();
-//		rearLeft.enableControl();
-//		rearRight.enableControl();
-		
-//		fieldPID.setPIDX(P_X, I_X, D_X);
-//		fieldPID.setPIDY(P_Y, I_Y, D_Y);
-//		fieldPID.setPIDZ(P_H, I_H, D_H);
-
+	public DriveBase() {
 		alignToFieldPID.setPID(P_H, I_H, D_H);
 		alignToFieldPID.setAbsoluteTolerance(TOLERANCE);
 		alignToFieldPID.setOutputRange(-1.0, 1.0);
@@ -108,14 +77,7 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	 * Update the odometer and location tracking
 	 */
 	public void updateOdometer() {
-		double[] v = odometer.get(); // TODO: finalize and uncomment
-//		double v_x = odometer.getXVelocity();
-//		double v_y = odometer.getYVelocity();
-//		double v_h = odometer.getAngularVelocity();
-//		double v_x = v[0];
-//		double v_y = v[1];
-//		double v_h = v[2];
-//		robotPosition.update(v_x, v_y, v_h);
+		double[] v = odometer.get(); 
 	}
 
 	/**
@@ -174,7 +136,7 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	 */
 	public void updateSmoothingAndScale(boolean held, int objects) {
 		if (held) {
-//			driverJoystick.setSmoothing(SMOOTHING_X, SMOOTHING_Y, SMOOTHING_Z*5);
+			driverJoystick.setSmoothing(SMOOTHING_X, SMOOTHING_Y, SMOOTHING_Z*5);
 			scale_x = 1.0;
 			scale_y = 1.0;
 			scale_z = SLOW_DRIVE_SCALE;
@@ -182,9 +144,9 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 			scale_x = 0.64;
 			scale_y = SLOW_DRIVE_SCALE;
 			scale_z = SLOW_DRIVE_SCALE;
-//			driverJoystick.setSmoothing(SMOOTHING_X * 4, SMOOTHING_Y * 5, SMOOTHING_Z * 4);
+			driverJoystick.setSmoothing(SMOOTHING_X * 4, SMOOTHING_Y * 5, SMOOTHING_Z * 4);
 		} else {
-//			driverJoystick.setSmoothing(SMOOTHING_X, SMOOTHING_Y, SMOOTHING_Z);
+			driverJoystick.setSmoothing(SMOOTHING_X, SMOOTHING_Y, SMOOTHING_Z);
 			scale_x = 1.0;
 			scale_y = 1.0;
 			scale_z = 0.75;

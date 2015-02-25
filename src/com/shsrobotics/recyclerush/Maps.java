@@ -13,7 +13,7 @@ public interface Maps extends GLOBAL {
 	public static final Joystick secondaryJoystick = new Joystick(USB_1);
 	
 	public static final double END_MATCH_MOTION_TIME = 5; // bring systems inside the robot with X seconds remaining
-   	public static final double SOFTWARE_VERSION = 1.0;
+   	public static final double SOFTWARE_VERSION = 2.0;
    
 	public class Buttons {
 	   
