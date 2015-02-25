@@ -11,8 +11,5 @@ public class EndMatch extends CommandGroup {
     
     public  EndMatch() {
     	addParallel(new ClawUp());
-    	if (!Buttons.disableEndMatchElevatorMotion.held()) {
-    		addSequential(new SetElevator(1.0));
-    	}
     }
 }

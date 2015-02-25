@@ -4,6 +4,7 @@ import com.shsrobotics.library.fieldpositioning.PID2DOutput;
 import com.shsrobotics.library.fieldpositioning.Point;
 
 import static com.shsrobotics.recyclerush.Hardware.IDriveBase.*;
+import static com.shsrobotics.recyclerush.Hardware.*;
 
 import com.shsrobotics.recyclerush.Maps;
 import com.shsrobotics.recyclerush.Hardware;
@@ -51,35 +52,7 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	
 	private double x, y, h;
 	
-	public DriveBase() { // TODO: UNCOMMENT
-//		frontLeft.changeControlMode(ControlMode.Speed);
-//		frontRight.changeControlMode(ControlMode.Speed);
-//		rearLeft.changeControlMode(ControlMode.Speed);
-//		rearRight.changeControlMode(ControlMode.Speed);
-//		
-//		frontLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		frontRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		rearLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		rearRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		
-//		frontLeft.setPID(P, I, D);
-//			frontLeft.setF(F);
-//		frontRight.setPID(P, I, D);
-//			frontRight.setF(F);
-//		rearLeft.setPID(P, I, D);
-//			rearLeft.setF(F);
-//		rearRight.setPID(P, I, D);
-//			rearRight.setF(F);
-//		
-//		frontLeft.enableControl();
-//		frontRight.enableControl();
-//		rearLeft.enableControl();
-//		rearRight.enableControl();
-		
-//		fieldPID.setPIDX(P_X, I_X, D_X);
-//		fieldPID.setPIDY(P_Y, I_Y, D_Y);
-//		fieldPID.setPIDZ(P_H, I_H, D_H);
-
+	public DriveBase() { 
 		alignToFieldPID.setPID(P_H, I_H, D_H);
 		alignToFieldPID.setAbsoluteTolerance(TOLERANCE);
 		alignToFieldPID.setOutputRange(-1.0, 1.0);
@@ -97,43 +70,19 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	 * @param z rotation speed
 	 */
 	public void drive(double x, double y, double z) {
-		robotDrive.mecanumDrive_Cartesian(x*x*x, -y*y*y, z*z*z, 0.0);
+		if (!dashboard.disableDrive()) {
+			robotDrive.mecanumDrive_Cartesian(x*x*x, -y*y*y, z*z*z, 0.0);
 
-		this.x = x;
-		this.y = y;
-		this.h = z;
+			this.x = x;
+			this.y = y;
+			this.h = z;
+		} else {
+			robotDrive.mecanumDrive_Cartesian(0, 0, 0, 0);
+		}
 	}
 	
-	/**
-	 * Update the odometer and location tracking
-	 */
-	public void updateOdometer() {
-		double[] v = odometer.get(); // TODO: finalize and uncomment
-//		double v_x = odometer.getXVelocity();
-//		double v_y = odometer.getYVelocity();
-//		double v_h = odometer.getAngularVelocity();
-//		double v_x = v[0];
-//		double v_y = v[1];
-//		double v_h = v[2];
-//		robotPosition.update(v_x, v_y, v_h);
-	}
-
-	/**
-	 * Drive to a specific location and orientation
-	 */
-	public void driveTo(double x, double y, double h) {
-//		fieldPID.setSetpointAndEnable(new Point(x, y, h));
-	}
 	
-	/**
-	 * Returns whether the robot has reached its setpoint
-	 * @return true if yes
-	 */
-	public boolean isOnTarget() {
-//		return fieldPID.isOnTarget(); // TODO: uncomment
-		return false;
-	}
-	
+		
 	/**
 	 * Get X position of robot
 	 * @return position

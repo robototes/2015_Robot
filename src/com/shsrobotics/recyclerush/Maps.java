@@ -17,25 +17,22 @@ public interface Maps extends GLOBAL {
    
 	public class Buttons {
 	   
-	   public static final JoystickButton
-		   	autoIntake = new JoystickButton(driverJoystick, 9),
-		   	intakeOne = new JoystickButton(driverJoystick, Extreme3DController.trigger),
-		   	liftForStack = new JoystickButton(driverJoystick, Extreme3DController.side),
-	  		release = new JoystickButton(driverJoystick, 5),
-	  		gripperOpen = new JoystickButton(driverJoystick, 11), 
-	  		gripperClose = new JoystickButton(driverJoystick, 12),
-			setElevator = new JoystickButton(secondaryJoystick, 4),
-	   		rcClawDrive = new JoystickButton(driverJoystick, 8),
-  			rollersIn = new JoystickButton(secondaryJoystick, 7),
-  			rollersOut = new JoystickButton(secondaryJoystick, 8),
-  			clawUp = new JoystickButton(secondaryJoystick, 5),
-  			clawDown = new JoystickButton(secondaryJoystick, 6),
-	   		elevatorUp = new JoystickButton(driverJoystick, 6),
-	   		elevatorDown = new JoystickButton(driverJoystick, 4),
-	   		alignToField = new JoystickButton(driverJoystick, 7),
-	   		disableEndMatchElevatorMotion = new JoystickButton(driverJoystick, 10);
+		public static final JoystickButton
+		   	autoIntake = new JoystickButton(secondaryJoystick, 1),
+		   	intakeOne = new JoystickButton(secondaryJoystick, 2),
+		   	assembleStack = new JoystickButton(secondaryJoystick, 3),
+	  		gripper = new JoystickButton(secondaryJoystick, 4), 
+			setElevator = new JoystickButton(secondaryJoystick, 5),
+	   		rcClawDrive = new JoystickButton(driverJoystick, 2),
+  			clawUp = new JoystickButton(secondaryJoystick, 6),
+  			clawDown = new JoystickButton(secondaryJoystick, 7),
+	   		elevatorUp = new JoystickButton(secondaryJoystick, 8),
+	   		elevatorDown = new JoystickButton(secondaryJoystick, 9),
+	   		alignToField = new JoystickButton(driverJoystick, 1);
 	   
-	   public static final int elevatorPosition = 0; // axis to get elevator position
+		public static final int 
+	   		elevatorPosition = 0, // axis to get elevator position
+	   		rollerSpeed = 1; // axis to get roller speed
 	}
 	
 	public class PDPPorts {
@@ -64,6 +61,7 @@ public interface Maps extends GLOBAL {
 			DISABLE_ROLLERS = "disable-rollers",
 			DISABLE_ELEVATOR = "disable-elevator",
 			DISABLE_CLAW = "disable-claw",
+			DISABLE_DRIVE = "disable-drive",
 			ELEVATOR_POSITION = "elev-pos",
 			SOFTWARE_VERSION = "version";
 	}

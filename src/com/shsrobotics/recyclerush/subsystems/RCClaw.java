@@ -1,6 +1,7 @@
 package com.shsrobotics.recyclerush.subsystems;
 
 import static com.shsrobotics.recyclerush.Hardware.IRCClaw.*;
+import static com.shsrobotics.recyclerush.Hardware.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 

@@ -88,6 +88,10 @@ public class RobotDashboard extends Subsystem {
     public boolean disableClaw() {
     	return table.getBoolean(Dashboard.DISABLE_CLAW, false);
     }
+    
+    public boolean disableDrive() {
+    	return table.getBoolean(Dashboard.DISABLE_DRIVE, false);
+    }
 
     public void initDefaultCommand() { }
     
