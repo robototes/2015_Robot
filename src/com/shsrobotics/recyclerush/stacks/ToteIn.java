@@ -32,7 +32,7 @@ public class ToteIn {
         		if (rollerIntake.isToteIn()) state = OBJECT_IN;
         		break;
         	case OBJECT_IN:
-        		if (Elevator.LEVEL == 0) state = ELEV_GRND;
+        		if (elevator.getPosition() <= 0.05) state = ELEV_GRND;
         		break;
         	case ELEV_GRND:
         		if (gripper.getState() == GripperState.CLOSED) state = GRIPPER_CLOSE;

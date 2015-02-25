@@ -31,10 +31,10 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	static final double D = 0.0;
 	static final double F = 0;
 	
-	public static final double SMOOTHING_X = 15;
-	public static final double SMOOTHING_Y = 15;
-	public static final double SMOOTHING_Z = 15;
-	public static final double SLOW_DRIVE_SCALE = 0.63; // so that when cubed it's 25%
+	public static final double SMOOTHING_X = 20;
+	public static final double SMOOTHING_Y = 20;
+	public static final double SMOOTHING_Z = 24;
+	public static final double SLOW_DRIVE_SCALE = 0.5; // so that when cubed it's 12.5%
 	double scale_x = 1.0;
 	double scale_y = 1.0;
 	double scale_z = 1.0;
@@ -174,28 +174,20 @@ public class DriveBase extends Subsystem implements PID2DOutput, Maps {
 	 */
 	public void updateSmoothingAndScale(boolean held, int objects) {
 		if (held) {
-			driverJoystick.setSmoothing(SMOOTHING_X, SMOOTHING_Y, SMOOTHING_Z*5);
+//			driverJoystick.setSmoothing(SMOOTHING_X, SMOOTHING_Y, SMOOTHING_Z*5);
 			scale_x = 1.0;
 			scale_y = 1.0;
 			scale_z = SLOW_DRIVE_SCALE;
 		} else if (objects > 0) {
-			scale_x = 0.794;
+			scale_x = 0.64;
 			scale_y = SLOW_DRIVE_SCALE;
 			scale_z = SLOW_DRIVE_SCALE;
-			double ySmoothingFactor = 5;
-			
-			if (objects == 1) {
-				ySmoothingFactor = 3;
-			} else {
-				scale_x = SLOW_DRIVE_SCALE;
-			}
-			
-			driverJoystick.setSmoothing(SMOOTHING_X * 4, SMOOTHING_Y * ySmoothingFactor, SMOOTHING_Z * 4);
+//			driverJoystick.setSmoothing(SMOOTHING_X * 4, SMOOTHING_Y * 5, SMOOTHING_Z * 4);
 		} else {
-			driverJoystick.setSmoothing(SMOOTHING_X, SMOOTHING_Y, SMOOTHING_Z);
+//			driverJoystick.setSmoothing(SMOOTHING_X, SMOOTHING_Y, SMOOTHING_Z);
 			scale_x = 1.0;
 			scale_y = 1.0;
-			scale_z = 1.0;
+			scale_z = 0.75;
 		}
 	}
 	

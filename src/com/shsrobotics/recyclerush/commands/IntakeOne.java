@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class IntakeOne extends CommandGroup {
     
     public IntakeOne() {
-    	if (StackManager.getObjects() == 0) {
+    	if (StackManager.getObjects() == 0 && elevator.getPosition() <= 1.1) {
     		addSequential(new OpenGripper());
     	}
     	addSequential(new RollersIn());

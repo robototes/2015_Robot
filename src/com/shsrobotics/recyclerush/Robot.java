@@ -115,7 +115,8 @@ public class Robot extends FRCRobot {
     	 */
 		driveBase.updateSmoothingAndScale(Buttons.rcClawDrive.held(), StackManager.getObjects());
 		if (!IDriveBase.alignToFieldPID.isEnable()) {
-			driveBase.drive(driverJoystick.outputX(), driverJoystick.outputY(), driverJoystick.outputZ());
+//			driveBase.drive(driverJoystick.outputX(), driverJoystick.outputY(), driverJoystick.outputZ());
+			driveBase.drive(driverJoystick.getX(), -driverJoystick.getY(), driverJoystick.getZ());
 		}
         driveBase.updateOdometer();
         // align to field
@@ -151,15 +152,15 @@ public class Robot extends FRCRobot {
         /*
          * GRIPPER
          */
-	if (Buttons.gripperOpen.pressed()) new OpenGripper().start();
-	if (Buttons.gripperClose.pressed()) new CloseGripper().start();
+        if (Buttons.gripper.pressed()) new OpenGripper().start();
+        if (Buttons.gripper.released()) new CloseGripper().start();
         
         /*
          * ELEVATOR
          */
       	double elevatorLevel = 5 * (-secondaryJoystick.getRawAxis(Buttons.elevatorPosition) + 0.5) / 1.5;
         if (Buttons.setElevator.pressed()) {
-        	new SetElevator(Math.floor(Math.abs(elevatorLevel))).start();
+        	new SetElevator(Math.abs(elevatorLevel)).start();
         } 
         
         if (Buttons.elevatorUp.held()) {

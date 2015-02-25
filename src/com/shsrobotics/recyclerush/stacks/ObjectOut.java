@@ -26,7 +26,7 @@ public class ObjectOut {
     public static boolean get() {
         switch (state) {
         	case START:
-        		if (Elevator.LEVEL == 0) state = ELEV_GRND;
+        		if (elevator.getPosition() <= 0.05) state = ELEV_GRND;
         		break;
         	case ELEV_GRND:
         		if (gripper.getState() == GripperState.OPEN) state = GRIPPER_OPEN;

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public interface Maps extends GLOBAL {
 	
-	public static final LowPassFilterJoystick driverJoystick = new LowPassFilterJoystick(USB_0, 15, 15, 12);
+	public static final LowPassFilterJoystick driverJoystick = new LowPassFilterJoystick(USB_0, 20, 20, 24);
 	public static final Joystick secondaryJoystick = new Joystick(USB_1);
 	
 	public static final double END_MATCH_MOTION_TIME = 5; // bring systems inside the robot with X seconds remaining
@@ -22,8 +22,7 @@ public interface Maps extends GLOBAL {
 		   	intakeOne = new JoystickButton(driverJoystick, Extreme3DController.trigger),
 		   	liftForStack = new JoystickButton(driverJoystick, Extreme3DController.side),
 	  		release = new JoystickButton(driverJoystick, 5),
-	  		gripperOpen = new JoystickButton(driverJoystick, 11), 
-	  		gripperClose = new JoystickButton(driverJoystick, 12),
+	  		gripper = new JoystickButton(secondaryJoystick, 3), 
 			setElevator = new JoystickButton(secondaryJoystick, 4),
 	   		rcClawDrive = new JoystickButton(driverJoystick, 8),
   			rollersIn = new JoystickButton(secondaryJoystick, 7),

@@ -1,6 +1,7 @@
 package com.shsrobotics.recyclerush.subsystems;
 
 import static com.shsrobotics.recyclerush.Hardware.IRollerIntake.*;
+import static com.shsrobotics.recyclerush.Hardware.*;
 
 import com.shsrobotics.recyclerush.stacks.StackManager;
 
