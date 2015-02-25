@@ -1,40 +1,35 @@
 package com.shsrobotics.recyclerush;
 
 
-import java.util.LinkedList;
+import static com.shsrobotics.recyclerush.Hardware.*;
+import static com.shsrobotics.recyclerush.Hardware.IDriveBase.gyroscope;
+import static com.shsrobotics.recyclerush.Maps.driverJoystick;
+import static com.shsrobotics.recyclerush.Maps.secondaryJoystick;
 
 import com.shsrobotics.library.FRCRobot;
-import com.shsrobotics.library.Subsystem;
+import com.shsrobotics.recyclerush.Hardware.IDashboard;
+import com.shsrobotics.recyclerush.Hardware.IDriveBase;
+import com.shsrobotics.recyclerush.Maps.Buttons;
 import com.shsrobotics.recyclerush.auto.Autonomous2015;
-import com.shsrobotics.recyclerush.auto.RCSet;
-import com.shsrobotics.recyclerush.auto.RobotSet;
-import com.shsrobotics.recyclerush.auto.ToteSet;
 import com.shsrobotics.recyclerush.commands.AssembleStack;
-import com.shsrobotics.recyclerush.commands.IntakeOne;
-import com.shsrobotics.recyclerush.commands.RollersIn;
-import com.shsrobotics.recyclerush.commands.TurnTo;
 import com.shsrobotics.recyclerush.commands.AutoIntake;
 import com.shsrobotics.recyclerush.commands.CancelAutoIntake;
 import com.shsrobotics.recyclerush.commands.CloseGripper;
 import com.shsrobotics.recyclerush.commands.EndMatch;
+import com.shsrobotics.recyclerush.commands.IntakeOne;
 import com.shsrobotics.recyclerush.commands.OpenGripper;
 import com.shsrobotics.recyclerush.commands.Release;
 import com.shsrobotics.recyclerush.commands.SetElevator;
+import com.shsrobotics.recyclerush.commands.TurnTo;
+import com.shsrobotics.recyclerush.stacks.ObjectOut;
 import com.shsrobotics.recyclerush.stacks.RCIn;
 import com.shsrobotics.recyclerush.stacks.StackManager;
 import com.shsrobotics.recyclerush.stacks.ToteIn;
-import com.shsrobotics.recyclerush.stacks.ObjectOut;
-import com.shsrobotics.recyclerush.subsystems.Elevator;
 import com.shsrobotics.recyclerush.subsystems.RobotDashboard;
-import com.shsrobotics.recyclerush.subsystems.TurnPID;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import static com.shsrobotics.recyclerush.Hardware.*;
-import static com.shsrobotics.recyclerush.Hardware.IDriveBase.gyroscope;
 
 public class Robot extends FRCRobot {
 
@@ -207,14 +202,13 @@ public class Robot extends FRCRobot {
 		 */
 		dashboard.update();
 		
-		// TODO: uncomment at competition
 		/*
 		 * END-OF-MATCH MOTION
 		 */
-//		if (DriverStation.getInstance().getMatchTime() <= END_MATCH_MOTION_TIME && !hasStartedEndMatchRoutine) {
-//			hasStartedEndMatchRoutine = true;
-//			new EndMatch().start();
-//		}
+		if (DriverStation.getInstance().getMatchTime() <= END_MATCH_MOTION_TIME && !hasStartedEndMatchRoutine) {
+			hasStartedEndMatchRoutine = true;
+			new EndMatch().start();
+		}
 		
 		if (driverJoystick.getRawButton(3)) {
 			IDriveBase.odometer.reset();

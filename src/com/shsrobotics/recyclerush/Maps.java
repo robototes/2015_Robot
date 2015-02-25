@@ -22,7 +22,7 @@ public interface Maps extends GLOBAL {
 		   	intakeOne = new JoystickButton(driverJoystick, Extreme3DController.trigger),
 		   	liftForStack = new JoystickButton(driverJoystick, Extreme3DController.side),
 	  		release = new JoystickButton(driverJoystick, 5),
-	  		gripper = new JoystickButton(secondaryJoystick, 3), 
+	  		gripper = new JoystickButton(secondaryJoystick, 3),
 			setElevator = new JoystickButton(secondaryJoystick, 4),
 	   		rcClawDrive = new JoystickButton(driverJoystick, 8),
   			rollersIn = new JoystickButton(secondaryJoystick, 7),

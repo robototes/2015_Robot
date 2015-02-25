@@ -8,7 +8,6 @@ import com.shsrobotics.recyclerush.auto.Autonomous2015;
 import com.shsrobotics.recyclerush.auto.RobotSet;
 import com.shsrobotics.recyclerush.auto.ToteSet;
 import com.shsrobotics.recyclerush.stacks.StackManager;
-import static com.shsrobotics.recyclerush.Hardware.IDriveBase.*;
 import static com.shsrobotics.recyclerush.Hardware.*;
 import static com.shsrobotics.recyclerush.Hardware.IDashboard.*;
 
