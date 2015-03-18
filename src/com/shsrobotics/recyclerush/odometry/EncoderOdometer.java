@@ -27,8 +27,11 @@ public class EncoderOdometer {
 		double d4 = rearRight.getSpeed() * Odometry.ENCODER_SCALING;
 		
 		v[0] = (d1 + d2 + d3 + d4) / 4;
-		v[1] = (-d1 + d2 + d3 - d4) * processed_alpha;
-		v[2] = (-d1 + d2 - d3 + d4) * Odometry.BETA;
+		v[1] = (d1+d4)/2 + (d1+d2+d3+d4)/4
+		//v[1] = (-d1 + d2 + d3 - d4) * processed_alpha;
+		v[2] = (d1+d3)/2 + (d1+d2+d3+d4)/4
+		//v[2] = (-d1 + d2 - d3 + d4) * Odometry.BETA;
+
 		
 		return v;
 	}
